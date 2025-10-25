@@ -8,6 +8,7 @@ setup.py
 ../../build/tasks12/tasks12.egg-info/requires.txt
 ../../build/tasks12/tasks12.egg-info/top_level.txt
 ../../build/tasks12/tasks12.egg-info/zip-safe
+launch/tasks12_launch.py
 resource/tasks12
 tasks12/__init__.py
 tasks12/test.py

@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'test = tasks12.test:main',
         ],
     },
 )

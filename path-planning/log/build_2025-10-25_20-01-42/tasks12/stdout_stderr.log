@@ -1,0 +1,23 @@
+running egg_info
+writing ../../build/tasks12/tasks12.egg-info/PKG-INFO
+writing dependency_links to ../../build/tasks12/tasks12.egg-info/dependency_links.txt
+writing entry points to ../../build/tasks12/tasks12.egg-info/entry_points.txt
+writing requirements to ../../build/tasks12/tasks12.egg-info/requires.txt
+writing top-level names to ../../build/tasks12/tasks12.egg-info/top_level.txt
+reading manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+running build
+running build_py
+copying tasks12/gap_follower.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+running install
+running install_lib
+copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/gap_follower.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/gap_follower.py to gap_follower.cpython-310.pyc
+running install_data
+copying launch/tasks12_launch.py -> /home/vscode/workspace/path-planning/install/tasks12/share/tasks12/launch
+running install_egg_info
+removing '/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info' (and everything under it)
+Copying ../../build/tasks12/tasks12.egg-info to /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info
+running install_scripts
+Installing gap_follower script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12
+writing list of installed files to '/home/vscode/workspace/path-planning/build/tasks12/install.log'

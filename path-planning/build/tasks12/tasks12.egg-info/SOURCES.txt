@@ -11,7 +11,7 @@ setup.py
 launch/tasks12_launch.py
 resource/tasks12
 tasks12/__init__.py
-tasks12/test.py
+tasks12/gap_follower.py
 test/test_copyright.py
 test/test_flake8.py
 test/test_pep257.py

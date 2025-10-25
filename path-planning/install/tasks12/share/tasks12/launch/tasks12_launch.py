@@ -9,7 +9,7 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='tasks12',
-            executable='test',
-            name='test'
+            executable='gap_follower',
+            name='gap_follower'
         ),
     ])

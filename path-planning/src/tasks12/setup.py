@@ -25,7 +25,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'test = tasks12.test:main',
+            'gap_follower = tasks12.gap_follower:main',
         ],
     },
 )

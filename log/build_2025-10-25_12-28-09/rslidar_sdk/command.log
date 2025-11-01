@@ -1,0 +1,2 @@
+Invoking command in '/home/thomasy22/agrobot-navigation/Navigation/build/rslidar_sdk': /usr/bin/cmake /home/thomasy22/agrobot-navigation/Navigation/rslidar_sdk -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCMAKE_INSTALL_PREFIX=/home/thomasy22/agrobot-navigation/Navigation/install/rslidar_sdk
+Invoked command in '/home/thomasy22/agrobot-navigation/Navigation/build/rslidar_sdk' returned '1': /usr/bin/cmake /home/thomasy22/agrobot-navigation/Navigation/rslidar_sdk -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCMAKE_INSTALL_PREFIX=/home/thomasy22/agrobot-navigation/Navigation/install/rslidar_sdk

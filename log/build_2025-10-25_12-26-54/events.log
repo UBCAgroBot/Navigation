@@ -1,0 +1,182 @@
+[0.000000] (-) TimerEvent: {}
+[0.000665] (rslidar_sdk) JobQueued: {'identifier': 'rslidar_sdk', 'dependencies': OrderedDict()}
+[0.000700] (tasks12) JobQueued: {'identifier': 'tasks12', 'dependencies': OrderedDict()}
+[0.000726] (rslidar_sdk) JobStarted: {'identifier': 'rslidar_sdk'}
+[0.003971] (tasks12) JobStarted: {'identifier': 'tasks12'}
+[0.012103] (rslidar_sdk) JobProgress: {'identifier': 'rslidar_sdk', 'progress': 'cmake'}
+[0.012655] (rslidar_sdk) Command: {'cmd': ['/usr/bin/cmake', '/home/thomasy22/agrobot-navigation/Navigation/rslidar_sdk', '-DCATKIN_INSTALL_INTO_PREFIX_ROOT=0', '-DCMAKE_INSTALL_PREFIX=/home/thomasy22/agrobot-navigation/Navigation/install/rslidar_sdk'], 'cwd': '/home/thomasy22/agrobot-navigation/Navigation/build/rslidar_sdk', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'thomasy22'), ('SHLVL', '1'), ('HOME', '/home/thomasy22'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('WSL_DISTRO_NAME', 'Ubuntu-22.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/thomasy22/agrobot-navigation/Navigation/install'), ('LOGNAME', 'thomasy22'), ('NAME', 'ThomasLegion'), ('WSL_INTEROP', '/run/WSL/6283_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files/Python313/Scripts/:/mnt/c/Program Files/Python313/:/mnt/c/Users/tomis/AppData/Local/Programs/cursor/resources/app/bin:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/MATLAB/R2025b/bin:/mnt/c/Program Files/MATLAB/R2024b/bin:/mnt/c/MinGW/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Users/tomis/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/JetBrains/IntelliJ IDEA Community Edition 2024.3.4.1/bin:/mnt/c/intelFPGA/18.1/modelsim_ase/win32aloem:/mnt/c/intelFPGA_lite/18.1/modelsim_ase/win32aloem:/mnt/c/Users/tomis/AppData/Local/Programs/cursor/resources/app/bin:/mnt/c/Users/tomis/.dotnet/tools:/mnt/c/Program Files/JetBrains/PyCharm Community Edition 2024.3.4/bin:/mnt/c/Users/tomis/AppData/Local/Programs/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Neovim/bin:/mnt/c/Program Files/Vim/vim91:/mnt/c/Program Files/Go/bin:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/Mullvad VPN/resources:/mnt/c/Program Files/Tailscale/:/mnt/c/Users/tomis/AppData/Local/Programs/Python/Python313:/mnt/c/Users/tomis/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/tomis/AppData/Roaming/npm:/mnt/c/Users/tomis/AppData/Roaming/Python/Python313/Scripts:/mnt/c/Users/tomis/go/bin:/mnt/c/Program Files/Go:/mnt/c/ytdlp:/mnt/c/Users/tomis/.lmstudio/bin:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000/'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/thomasy22/agrobot-navigation/Navigation/install/tasks12'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/thomasy22/agrobot-navigation/Navigation/build/rslidar_sdk'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'ELECTRON_RUN_AS_NODE/w:')]), 'shell': False}
+[0.055540] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m=============================================================\x1b[0m\n'}
+[0.055672] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m-- POINT_TYPE is XYZI\x1b[0m\n'}
+[0.055708] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m=============================================================\x1b[0m\n'}
+[0.102784] (-) TimerEvent: {}
+[0.210653] (-) TimerEvent: {}
+[0.311041] (-) TimerEvent: {}
+[0.360172] (tasks12) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../../build/tasks12', 'build', '--build-base', '/home/thomasy22/agrobot-navigation/Navigation/build/tasks12/build', 'install', '--record', '/home/thomasy22/agrobot-navigation/Navigation/build/tasks12/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/thomasy22/agrobot-navigation/Navigation/path-planning/src/tasks12', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'thomasy22', 'SHLVL': '1', 'HOME': '/home/thomasy22', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'WSL_DISTRO_NAME': 'Ubuntu-22.04', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/thomasy22/agrobot-navigation/Navigation/install', 'LOGNAME': 'thomasy22', 'NAME': 'ThomasLegion', 'WSL_INTEROP': '/run/WSL/6283_interop', 'PULSE_SERVER': 'unix:/mnt/wslg/PulseServer', '_': '/usr/bin/colcon', 'TERM': 'xterm-256color', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files/Python313/Scripts/:/mnt/c/Program Files/Python313/:/mnt/c/Users/tomis/AppData/Local/Programs/cursor/resources/app/bin:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/MATLAB/R2025b/bin:/mnt/c/Program Files/MATLAB/R2024b/bin:/mnt/c/MinGW/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Users/tomis/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/JetBrains/IntelliJ IDEA Community Edition 2024.3.4.1/bin:/mnt/c/intelFPGA/18.1/modelsim_ase/win32aloem:/mnt/c/intelFPGA_lite/18.1/modelsim_ase/win32aloem:/mnt/c/Users/tomis/AppData/Local/Programs/cursor/resources/app/bin:/mnt/c/Users/tomis/.dotnet/tools:/mnt/c/Program Files/JetBrains/PyCharm Community Edition 2024.3.4/bin:/mnt/c/Users/tomis/AppData/Local/Programs/cursor/resources/app/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Neovim/bin:/mnt/c/Program Files/Vim/vim91:/mnt/c/Program Files/Go/bin:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/Mullvad VPN/resources:/mnt/c/Program Files/Tailscale/:/mnt/c/Users/tomis/AppData/Local/Programs/Python/Python313:/mnt/c/Users/tomis/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/tomis/AppData/Roaming/npm:/mnt/c/Users/tomis/AppData/Roaming/Python/Python313/Scripts:/mnt/c/Users/tomis/go/bin:/mnt/c/Program Files/Go:/mnt/c/ytdlp:/mnt/c/Users/tomis/.lmstudio/bin:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000/', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'AMENT_PREFIX_PATH': '/home/thomasy22/agrobot-navigation/Navigation/install/tasks12', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'PWD': '/home/thomasy22/agrobot-navigation/Navigation/build/tasks12', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/thomasy22/agrobot-navigation/Navigation/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages:/home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages', 'COLCON': '1', 'WSL2_GUI_APPS_ENABLED': '1', 'HOSTTYPE': 'x86_64', 'WSLENV': 'ELECTRON_RUN_AS_NODE/w:'}, 'shell': False}
+[0.414927] (-) TimerEvent: {}
+[0.462532] (tasks12) StdoutLine: {'line': b'running egg_info\n'}
+[0.462766] (tasks12) StdoutLine: {'line': b'writing ../../../build/tasks12/tasks12.egg-info/PKG-INFO\n'}
+[0.463111] (tasks12) StdoutLine: {'line': b'writing dependency_links to ../../../build/tasks12/tasks12.egg-info/dependency_links.txt\n'}
+[0.463266] (tasks12) StdoutLine: {'line': b'writing entry points to ../../../build/tasks12/tasks12.egg-info/entry_points.txt\n'}
+[0.463342] (tasks12) StdoutLine: {'line': b'writing requirements to ../../../build/tasks12/tasks12.egg-info/requires.txt\n'}
+[0.463376] (tasks12) StdoutLine: {'line': b'writing top-level names to ../../../build/tasks12/tasks12.egg-info/top_level.txt\n'}
+[0.464036] (tasks12) StdoutLine: {'line': b"reading manifest file '../../../build/tasks12/tasks12.egg-info/SOURCES.txt'\n"}
+[0.464648] (tasks12) StdoutLine: {'line': b"writing manifest file '../../../build/tasks12/tasks12.egg-info/SOURCES.txt'\n"}
+[0.464874] (tasks12) StdoutLine: {'line': b'running build\n'}
+[0.465042] (tasks12) StdoutLine: {'line': b'running build_py\n'}
+[0.465223] (tasks12) StdoutLine: {'line': b'running install\n'}
+[0.465442] (tasks12) StdoutLine: {'line': b'running install_lib\n'}
+[0.466048] (tasks12) StdoutLine: {'line': b'running install_data\n'}
+[0.466104] (tasks12) StdoutLine: {'line': b'running install_egg_info\n'}
+[0.467044] (tasks12) StdoutLine: {'line': b"removing '/home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info' (and everything under it)\n"}
+[0.467653] (tasks12) StdoutLine: {'line': b'Copying ../../../build/tasks12/tasks12.egg-info to /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info\n'}
+[0.468424] (tasks12) StdoutLine: {'line': b'running install_scripts\n'}
+[0.479405] (tasks12) StdoutLine: {'line': b"writing list of installed files to '/home/thomasy22/agrobot-navigation/Navigation/build/tasks12/install.log'\n"}
+[0.490977] (tasks12) CommandEnded: {'returncode': 0}
+[0.497551] (tasks12) JobEnded: {'identifier': 'tasks12', 'rc': 0}
+[0.515547] (-) TimerEvent: {}
+[0.621675] (-) TimerEvent: {}
+[0.729535] (-) TimerEvent: {}
+[0.837530] (-) TimerEvent: {}
+[0.945614] (-) TimerEvent: {}
+[1.053619] (-) TimerEvent: {}
+[1.161501] (-) TimerEvent: {}
+[1.269343] (-) TimerEvent: {}
+[1.377204] (-) TimerEvent: {}
+[1.478119] (-) TimerEvent: {}
+[1.585162] (-) TimerEvent: {}
+[1.692003] (-) TimerEvent: {}
+[1.799863] (-) TimerEvent: {}
+[1.907725] (-) TimerEvent: {}
+[2.015635] (-) TimerEvent: {}
+[2.116462] (-) TimerEvent: {}
+[2.218257] (-) TimerEvent: {}
+[2.319404] (-) TimerEvent: {}
+[2.402847] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m=============================================================\x1b[0m\n'}
+[2.403032] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m-- ROS Not Found. ROS Support is turned Off.\x1b[0m\n'}
+[2.403069] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m=============================================================\x1b[0m\n'}
+[2.420966] (-) TimerEvent: {}
+[2.522202] (-) TimerEvent: {}
+[2.630179] (-) TimerEvent: {}
+[2.737589] (-) TimerEvent: {}
+[2.845637] (-) TimerEvent: {}
+[2.953952] (-) TimerEvent: {}
+[3.062355] (-) TimerEvent: {}
+[3.170348] (-) TimerEvent: {}
+[3.278195] (-) TimerEvent: {}
+[3.386127] (-) TimerEvent: {}
+[3.486995] (-) TimerEvent: {}
+[3.594723] (-) TimerEvent: {}
+[3.702583] (-) TimerEvent: {}
+[3.809365] (-) TimerEvent: {}
+[3.917255] (-) TimerEvent: {}
+[4.024967] (-) TimerEvent: {}
+[4.130105] (-) TimerEvent: {}
+[4.237964] (-) TimerEvent: {}
+[4.345769] (-) TimerEvent: {}
+[4.446649] (-) TimerEvent: {}
+[4.549819] (-) TimerEvent: {}
+[4.657712] (-) TimerEvent: {}
+[4.765677] (-) TimerEvent: {}
+[4.872649] (-) TimerEvent: {}
+[4.980596] (-) TimerEvent: {}
+[5.081054] (-) TimerEvent: {}
+[5.186780] (-) TimerEvent: {}
+[5.294755] (-) TimerEvent: {}
+[5.402768] (-) TimerEvent: {}
+[5.503399] (-) TimerEvent: {}
+[5.610941] (-) TimerEvent: {}
+[5.718823] (-) TimerEvent: {}
+[5.826779] (-) TimerEvent: {}
+[5.933793] (-) TimerEvent: {}
+[6.041646] (-) TimerEvent: {}
+[6.144631] (-) TimerEvent: {}
+[6.252482] (-) TimerEvent: {}
+[6.360456] (-) TimerEvent: {}
+[6.468414] (-) TimerEvent: {}
+[6.576214] (-) TimerEvent: {}
+[6.684037] (-) TimerEvent: {}
+[6.791842] (-) TimerEvent: {}
+[6.899811] (-) TimerEvent: {}
+[7.006623] (-) TimerEvent: {}
+[7.114819] (-) TimerEvent: {}
+[7.222938] (-) TimerEvent: {}
+[7.331049] (-) TimerEvent: {}
+[7.438167] (-) TimerEvent: {}
+[7.545979] (-) TimerEvent: {}
+[7.572763] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m=============================================================\x1b[0m\n'}
+[7.573077] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m-- ROS2 Not Found. ROS2 Support is turned Off.\x1b[0m\n'}
+[7.573155] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m=============================================================\x1b[0m\n'}
+[7.576191] (rslidar_sdk) StderrLine: {'line': b'\x1b[31mCMake Error at CMakeLists.txt:159 (add_subdirectory):\n'}
+[7.576324] (rslidar_sdk) StderrLine: {'line': b'  The source directory\n'}
+[7.576365] (rslidar_sdk) StderrLine: {'line': b'\n'}
+[7.576408] (rslidar_sdk) StderrLine: {'line': b'    /home/thomasy22/agrobot-navigation/Navigation/rslidar_sdk/src/rs_driver\n'}
+[7.576443] (rslidar_sdk) StderrLine: {'line': b'\n'}
+[7.576475] (rslidar_sdk) StderrLine: {'line': b'  does not contain a CMakeLists.txt file.\n'}
+[7.576508] (rslidar_sdk) StderrLine: {'line': b'\n'}
+[7.576539] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m\n'}
+[7.651444] (-) TimerEvent: {}
+[7.759288] (-) TimerEvent: {}
+[7.867202] (-) TimerEvent: {}
+[7.975193] (-) TimerEvent: {}
+[8.076703] (-) TimerEvent: {}
+[8.184639] (-) TimerEvent: {}
+[8.292481] (-) TimerEvent: {}
+[8.400255] (-) TimerEvent: {}
+[8.508154] (-) TimerEvent: {}
+[8.616078] (-) TimerEvent: {}
+[8.723889] (-) TimerEvent: {}
+[8.831645] (-) TimerEvent: {}
+[8.939476] (-) TimerEvent: {}
+[9.047359] (-) TimerEvent: {}
+[9.154463] (-) TimerEvent: {}
+[9.262453] (-) TimerEvent: {}
+[9.370297] (-) TimerEvent: {}
+[9.478218] (-) TimerEvent: {}
+[9.586053] (-) TimerEvent: {}
+[9.693974] (-) TimerEvent: {}
+[9.794780] (-) TimerEvent: {}
+[9.895674] (-) TimerEvent: {}
+[9.996577] (-) TimerEvent: {}
+[10.097656] (-) TimerEvent: {}
+[10.198755] (-) TimerEvent: {}
+[10.299548] (-) TimerEvent: {}
+[10.407487] (-) TimerEvent: {}
+[10.515512] (-) TimerEvent: {}
+[10.617810] (-) TimerEvent: {}
+[10.725888] (-) TimerEvent: {}
+[10.833786] (-) TimerEvent: {}
+[10.941568] (-) TimerEvent: {}
+[11.049358] (-) TimerEvent: {}
+[11.157147] (-) TimerEvent: {}
+[11.258116] (-) TimerEvent: {}
+[11.359204] (-) TimerEvent: {}
+[11.459754] (-) TimerEvent: {}
+[11.567866] (-) TimerEvent: {}
+[11.675897] (-) TimerEvent: {}
+[11.783917] (-) TimerEvent: {}
+[11.891912] (-) TimerEvent: {}
+[11.999904] (-) TimerEvent: {}
+[12.107866] (-) TimerEvent: {}
+[12.215896] (-) TimerEvent: {}
+[12.269855] (rslidar_sdk) StderrLine: {'line': b'\x1b[31mCMake Error at CMakeLists.txt:160 (find_package):\n'}
+[12.270106] (rslidar_sdk) StderrLine: {'line': b'  By not providing "Findrs_driver.cmake" in CMAKE_MODULE_PATH this project\n'}
+[12.270180] (rslidar_sdk) StderrLine: {'line': b'  has asked CMake to find a package configuration file provided by\n'}
+[12.270244] (rslidar_sdk) StderrLine: {'line': b'  "rs_driver", but CMake did not find one.\n'}
+[12.270305] (rslidar_sdk) StderrLine: {'line': b'\n'}
+[12.270363] (rslidar_sdk) StderrLine: {'line': b'  Could not find a package configuration file provided by "rs_driver" with\n'}
+[12.270419] (rslidar_sdk) StderrLine: {'line': b'  any of the following names:\n'}
+[12.270472] (rslidar_sdk) StderrLine: {'line': b'\n'}
+[12.270524] (rslidar_sdk) StderrLine: {'line': b'    rs_driverConfig.cmake\n'}
+[12.270574] (rslidar_sdk) StderrLine: {'line': b'    rs_driver-config.cmake\n'}
+[12.270622] (rslidar_sdk) StderrLine: {'line': b'\n'}
+[12.270669] (rslidar_sdk) StderrLine: {'line': b'  Add the installation prefix of "rs_driver" to CMAKE_PREFIX_PATH or set\n'}
+[12.270717] (rslidar_sdk) StderrLine: {'line': b'  "rs_driver_DIR" to a directory containing one of the above files.  If\n'}
+[12.270765] (rslidar_sdk) StderrLine: {'line': b'  "rs_driver" provides a separate development package or SDK, be sure it has\n'}
+[12.270814] (rslidar_sdk) StderrLine: {'line': b'  been installed.\n'}
+[12.270862] (rslidar_sdk) StderrLine: {'line': b'\n'}
+[12.270911] (rslidar_sdk) StderrLine: {'line': b'\x1b[0m\n'}
+[12.279828] (rslidar_sdk) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[12.280068] (rslidar_sdk) StdoutLine: {'line': b'See also "/home/thomasy22/agrobot-navigation/Navigation/build/rslidar_sdk/CMakeFiles/CMakeOutput.log".\n'}
+[12.286165] (rslidar_sdk) CommandEnded: {'returncode': 1}
+[12.299256] (rslidar_sdk) JobEnded: {'identifier': 'rslidar_sdk', 'rc': 1}
+[12.309677] (-) EventReactorShutdown: {}

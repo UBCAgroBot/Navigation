@@ -1,0 +1,34 @@
+[0m=============================================================[0m
+[0m-- POINT_TYPE is XYZI[0m
+[0m=============================================================[0m
+[0m=============================================================[0m
+[0m-- ROS Not Found. ROS Support is turned Off.[0m
+[0m=============================================================[0m
+[0m=============================================================[0m
+[0m-- ROS2 Not Found. ROS2 Support is turned Off.[0m
+[0m=============================================================[0m
+[31mCMake Error at CMakeLists.txt:159 (add_subdirectory):
+  The source directory
+
+    /home/thomasy22/agrobot-navigation/Navigation/rslidar_sdk/src/rs_driver
+
+  does not contain a CMakeLists.txt file.
+
+[0m
+[31mCMake Error at CMakeLists.txt:160 (find_package):
+  By not providing "Findrs_driver.cmake" in CMAKE_MODULE_PATH this project
+  has asked CMake to find a package configuration file provided by
+  "rs_driver", but CMake did not find one.
+
+  Could not find a package configuration file provided by "rs_driver" with
+  any of the following names:
+
+    rs_driverConfig.cmake
+    rs_driver-config.cmake
+
+  Add the installation prefix of "rs_driver" to CMAKE_PREFIX_PATH or set
+  "rs_driver_DIR" to a directory containing one of the above files.  If
+  "rs_driver" provides a separate development package or SDK, be sure it has
+  been installed.
+
+[0m

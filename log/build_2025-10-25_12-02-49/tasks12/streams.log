@@ -1,0 +1,33 @@
+[0.444s] Invoking command in '/home/thomasy22/agrobot-navigation/Navigation/path-planning/src/tasks12': PYTHONPATH=/home/thomasy22/agrobot-navigation/Navigation/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/tasks12 build --build-base /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/build install --record /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/install.log --single-version-externally-managed install_data
+[0.542s] running egg_info
+[0.543s] creating ../../../build/tasks12/tasks12.egg-info
+[0.543s] writing ../../../build/tasks12/tasks12.egg-info/PKG-INFO
+[0.543s] writing dependency_links to ../../../build/tasks12/tasks12.egg-info/dependency_links.txt
+[0.543s] writing entry points to ../../../build/tasks12/tasks12.egg-info/entry_points.txt
+[0.543s] writing requirements to ../../../build/tasks12/tasks12.egg-info/requires.txt
+[0.543s] writing top-level names to ../../../build/tasks12/tasks12.egg-info/top_level.txt
+[0.543s] writing manifest file '../../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[0.544s] reading manifest file '../../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[0.544s] writing manifest file '../../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[0.545s] running build
+[0.545s] running build_py
+[0.545s] creating /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/build
+[0.545s] creating /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/build/lib
+[0.545s] creating /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/build/lib/tasks12
+[0.545s] copying tasks12/__init__.py -> /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/build/lib/tasks12
+[0.545s] running install
+[0.545s] running install_lib
+[0.546s] creating /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages/tasks12
+[0.546s] copying /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/build/lib/tasks12/__init__.py -> /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages/tasks12
+[0.546s] byte-compiling /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages/tasks12/__init__.py to __init__.cpython-310.pyc
+[0.546s] running install_data
+[0.546s] creating /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/share/ament_index
+[0.546s] creating /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/share/ament_index/resource_index
+[0.546s] creating /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/share/ament_index/resource_index/packages
+[0.546s] copying resource/tasks12 -> /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/share/ament_index/resource_index/packages
+[0.547s] copying package.xml -> /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/share/tasks12
+[0.547s] running install_egg_info
+[0.547s] Copying ../../../build/tasks12/tasks12.egg-info to /home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info
+[0.548s] running install_scripts
+[0.559s] writing list of installed files to '/home/thomasy22/agrobot-navigation/Navigation/build/tasks12/install.log'
+[0.571s] Invoked command in '/home/thomasy22/agrobot-navigation/Navigation/path-planning/src/tasks12' returned '0': PYTHONPATH=/home/thomasy22/agrobot-navigation/Navigation/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/thomasy22/agrobot-navigation/Navigation/install/tasks12/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/tasks12 build --build-base /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/build install --record /home/thomasy22/agrobot-navigation/Navigation/build/tasks12/install.log --single-version-externally-managed install_data

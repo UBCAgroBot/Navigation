@@ -1,3 +1,0 @@
-[submodule "sensor-fusion/ekf/Navigation"]
-	path = sensor-fusion/ekf/Navigation
-	url = https://github.com/UBCAgroBot/Navigation

@@ -1,0 +1,72 @@
+[0.000000] (-) TimerEvent: {}
+[0.000495] (tasks12) JobQueued: {'identifier': 'tasks12', 'dependencies': OrderedDict()}
+[0.000721] (tasks12) JobStarted: {'identifier': 'tasks12'}
+[0.098075] (-) TimerEvent: {}
+[0.198624] (-) TimerEvent: {}
+[0.299253] (-) TimerEvent: {}
+[0.399858] (-) TimerEvent: {}
+[0.500453] (-) TimerEvent: {}
+[0.601126] (-) TimerEvent: {}
+[0.701929] (-) TimerEvent: {}
+[0.802527] (-) TimerEvent: {}
+[0.903157] (-) TimerEvent: {}
+[1.003791] (-) TimerEvent: {}
+[1.104421] (-) TimerEvent: {}
+[1.204893] (-) TimerEvent: {}
+[1.305434] (-) TimerEvent: {}
+[1.406184] (-) TimerEvent: {}
+[1.506723] (-) TimerEvent: {}
+[1.607730] (-) TimerEvent: {}
+[1.708334] (-) TimerEvent: {}
+[1.808894] (-) TimerEvent: {}
+[1.909521] (-) TimerEvent: {}
+[2.009946] (-) TimerEvent: {}
+[2.016253] (tasks12) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/tasks12', 'build', '--build-base', '/home/vscode/workspace/path-planning/build/tasks12/build', 'install', '--record', '/home/vscode/workspace/path-planning/build/tasks12/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/vscode/workspace/path-planning/src/tasks12', 'env': {'PYTHONWARNINGS': 'ignore', 'HOSTNAME': 'docker-desktop', 'GIT_ASKPASS': '/vscode/vscode-server/bin/linux-x64/ac4cbdf48759c7d8c3eb91ffe6bb04316e263c57/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'BROWSER': '/vscode/vscode-server/bin/linux-x64/ac4cbdf48759c7d8c3eb91ffe6bb04316e263c57/bin/helpers/browser.sh', 'HOME': '/home/vscode', 'OLDPWD': '/home/vscode/workspace', 'TERM_PROGRAM_VERSION': '1.106.0', 'VSCODE_IPC_HOOK_CLI': '/tmp/vscode-ipc-df84b9eb-e4f9-4de1-9b17-2eecd29428b5.sock', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/vscode/vscode-server/bin/linux-x64/ac4cbdf48759c7d8c3eb91ffe6bb04316e263c57/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/vscode/vscode-server/bin/linux-x64/ac4cbdf48759c7d8c3eb91ffe6bb04316e263c57/node', 'VSCODE_PYTHON_AUTOACTIVATE_GUARD': '1', 'COLORTERM': 'truecolor', 'REMOTE_CONTAINERS': 'true', 'WAYLAND_DISPLAY': 'vscode-wayland-d56353e7-1719-4447-9f0b-314968e4b1fe.sock', 'COLCON_PREFIX_PATH': '/home/vscode/workspace/path-planning/install', 'ROS_DISTRO': 'humble', 'REMOTE_CONTAINERS_IPC': '/tmp/vscode-remote-containers-ipc-547cd81b-a6bb-4d33-b8fe-8e208d2cd20d.sock', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm-256color', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/vscode/vscode-server/bin/linux-x64/ac4cbdf48759c7d8c3eb91ffe6bb04316e263c57/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'XDG_RUNTIME_DIR': '/tmp/user/1000', 'REMOTE_CONTAINERS_SOCKETS': '["/tmp/.X11-unix/X1","/home/vscode/.gnupg/S.gpg-agent"]', 'DISPLAY': ':1', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'VSCODE_GIT_IPC_HANDLE': '/tmp/user/1000/vscode-git-0f03e8796e.sock', 'TERM_PROGRAM': 'vscode', 'AMENT_PREFIX_PATH': '/home/vscode/workspace/path-planning/install/tasks12:/opt/ros/humble', 'DEBIAN_FRONTEND': 'noninteractive', 'REMOTE_CONTAINERS_DISPLAY_SOCK': '/tmp/.X11-unix/X1', 'SHELL': '/bin/bash', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/vscode/workspace/path-planning/build/tasks12', 'PYTHONPATH': '/home/vscode/workspace/path-planning/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages:/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[2.110055] (-) TimerEvent: {}
+[2.210662] (-) TimerEvent: {}
+[2.311384] (-) TimerEvent: {}
+[2.412135] (-) TimerEvent: {}
+[2.512727] (-) TimerEvent: {}
+[2.613545] (-) TimerEvent: {}
+[2.714162] (-) TimerEvent: {}
+[2.814747] (-) TimerEvent: {}
+[2.883175] (tasks12) StdoutLine: {'line': b'running egg_info\n'}
+[2.887812] (tasks12) StdoutLine: {'line': b'writing ../../build/tasks12/tasks12.egg-info/PKG-INFO\n'}
+[2.896309] (tasks12) StdoutLine: {'line': b'writing dependency_links to ../../build/tasks12/tasks12.egg-info/dependency_links.txt\n'}
+[2.904099] (tasks12) StdoutLine: {'line': b'writing entry points to ../../build/tasks12/tasks12.egg-info/entry_points.txt\n'}
+[2.910057] (tasks12) StdoutLine: {'line': b'writing requirements to ../../build/tasks12/tasks12.egg-info/requires.txt\n'}
+[2.913659] (tasks12) StdoutLine: {'line': b'writing top-level names to ../../build/tasks12/tasks12.egg-info/top_level.txt\n'}
+[2.914882] (-) TimerEvent: {}
+[2.956870] (tasks12) StdoutLine: {'line': b"reading manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'\n"}
+[3.015022] (-) TimerEvent: {}
+[3.037372] (tasks12) StdoutLine: {'line': b"writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'\n"}
+[3.041706] (tasks12) StdoutLine: {'line': b'running build\n'}
+[3.042680] (tasks12) StdoutLine: {'line': b'running build_py\n'}
+[3.057581] (tasks12) StdoutLine: {'line': b'copying tasks12/demo_lidar.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12\n'}
+[3.115150] (-) TimerEvent: {}
+[3.118276] (tasks12) StdoutLine: {'line': b'running install\n'}
+[3.119498] (tasks12) StdoutLine: {'line': b'running install_lib\n'}
+[3.163274] (tasks12) StdoutLine: {'line': b'copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/demo_lidar.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12\n'}
+[3.215284] (-) TimerEvent: {}
+[3.270233] (tasks12) StdoutLine: {'line': b'byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/demo_lidar.py to demo_lidar.cpython-310.pyc\n'}
+[3.315431] (-) TimerEvent: {}
+[3.357646] (tasks12) StdoutLine: {'line': b'running install_data\n'}
+[3.397444] (tasks12) StdoutLine: {'line': b'running install_egg_info\n'}
+[3.408453] (tasks12) StdoutLine: {'line': b"removing '/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info' (and everything under it)\n"}
+[3.415476] (-) TimerEvent: {}
+[3.469284] (tasks12) StdoutLine: {'line': b'Copying ../../build/tasks12/tasks12.egg-info to /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info\n'}
+[3.515602] (-) TimerEvent: {}
+[3.616213] (-) TimerEvent: {}
+[3.716846] (-) TimerEvent: {}
+[3.730057] (tasks12) StdoutLine: {'line': b'running install_scripts\n'}
+[3.805175] (tasks12) StdoutLine: {'line': b'Installing demo_lidar script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12\n'}
+[3.816949] (-) TimerEvent: {}
+[3.817309] (tasks12) StdoutLine: {'line': b'Installing wall_follower script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12\n'}
+[3.829325] (tasks12) StdoutLine: {'line': b'Installing wall_follower_lidar script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12\n'}
+[3.844263] (tasks12) StdoutLine: {'line': b"writing list of installed files to '/home/vscode/workspace/path-planning/build/tasks12/install.log'\n"}
+[3.866354] (tasks12) CommandEnded: {'returncode': 0}
+[3.917012] (-) TimerEvent: {}
+[4.017601] (-) TimerEvent: {}
+[4.118074] (-) TimerEvent: {}
+[4.164481] (tasks12) JobEnded: {'identifier': 'tasks12', 'rc': 0}
+[4.173509] (-) EventReactorShutdown: {}

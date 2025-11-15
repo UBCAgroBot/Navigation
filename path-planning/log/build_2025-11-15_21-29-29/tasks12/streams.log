@@ -1,0 +1,26 @@
+[1.925s] Invoking command in '/home/vscode/workspace/path-planning/src/tasks12': PYTHONPATH=/home/vscode/workspace/path-planning/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/tasks12 build --build-base /home/vscode/workspace/path-planning/build/tasks12/build install --record /home/vscode/workspace/path-planning/build/tasks12/install.log --single-version-externally-managed install_data
+[2.736s] running egg_info
+[2.742s] writing ../../build/tasks12/tasks12.egg-info/PKG-INFO
+[2.750s] writing dependency_links to ../../build/tasks12/tasks12.egg-info/dependency_links.txt
+[2.756s] writing entry points to ../../build/tasks12/tasks12.egg-info/entry_points.txt
+[2.763s] writing requirements to ../../build/tasks12/tasks12.egg-info/requires.txt
+[2.766s] writing top-level names to ../../build/tasks12/tasks12.egg-info/top_level.txt
+[2.806s] reading manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[2.887s] writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[2.888s] running build
+[2.889s] running build_py
+[2.897s] copying tasks12/demo_lidar.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+[2.956s] running install
+[2.957s] running install_lib
+[2.999s] copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/demo_lidar.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+[3.104s] byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/demo_lidar.py to demo_lidar.cpython-310.pyc
+[3.190s] running install_data
+[3.230s] running install_egg_info
+[3.242s] removing '/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info' (and everything under it)
+[3.302s] Copying ../../build/tasks12/tasks12.egg-info to /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info
+[3.562s] running install_scripts
+[3.634s] Installing demo_lidar script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12
+[3.646s] Installing wall_follower script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12
+[3.657s] Installing wall_follower_lidar script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12
+[3.670s] writing list of installed files to '/home/vscode/workspace/path-planning/build/tasks12/install.log'
+[3.694s] Invoked command in '/home/vscode/workspace/path-planning/src/tasks12' returned '0': PYTHONPATH=/home/vscode/workspace/path-planning/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/tasks12 build --build-base /home/vscode/workspace/path-planning/build/tasks12/build install --record /home/vscode/workspace/path-planning/build/tasks12/install.log --single-version-externally-managed install_data

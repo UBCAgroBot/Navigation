@@ -1,0 +1,47 @@
+[1.595s] Invoking command in '/home/vscode/workspace/path-planning/src/tasks12': PYTHONPATH=/home/vscode/workspace/path-planning/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/tasks12 build --build-base /home/vscode/workspace/path-planning/build/tasks12/build install --record /home/vscode/workspace/path-planning/build/tasks12/install.log --single-version-externally-managed install_data
+[2.390s] running egg_info
+[2.394s] creating ../../build/tasks12/tasks12.egg-info
+[2.398s] writing ../../build/tasks12/tasks12.egg-info/PKG-INFO
+[2.409s] writing dependency_links to ../../build/tasks12/tasks12.egg-info/dependency_links.txt
+[2.424s] writing entry points to ../../build/tasks12/tasks12.egg-info/entry_points.txt
+[2.430s] writing requirements to ../../build/tasks12/tasks12.egg-info/requires.txt
+[2.434s] writing top-level names to ../../build/tasks12/tasks12.egg-info/top_level.txt
+[2.440s] writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[2.478s] reading manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[2.542s] writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[2.546s] running build
+[2.547s] running build_py
+[2.553s] creating /home/vscode/workspace/path-planning/build/tasks12/build
+[2.555s] creating /home/vscode/workspace/path-planning/build/tasks12/build/lib
+[2.558s] creating /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+[2.568s] copying tasks12/demo_lidar.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+[2.589s] copying tasks12/wall_follower.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+[2.609s] copying tasks12/wall_follower_lidar.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+[2.631s] copying tasks12/__init__.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+[2.645s] running install
+[2.646s] running install_lib
+[2.667s] creating /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+[2.686s] copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/demo_lidar.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+[2.722s] copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/wall_follower.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+[2.758s] copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/wall_follower_lidar.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+[2.794s] copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/__init__.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+[2.831s] byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/demo_lidar.py to demo_lidar.cpython-310.pyc
+[2.874s] byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/wall_follower.py to wall_follower.cpython-310.pyc
+[2.916s] byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/wall_follower_lidar.py to wall_follower_lidar.cpython-310.pyc
+[2.960s] byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/__init__.py to __init__.cpython-310.pyc
+[2.992s] running install_data
+[3.001s] creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index
+[3.004s] creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index
+[3.007s] creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index/packages
+[3.016s] copying resource/tasks12 -> /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index/packages
+[3.041s] copying package.xml -> /home/vscode/workspace/path-planning/install/tasks12/share/tasks12
+[3.058s] creating /home/vscode/workspace/path-planning/install/tasks12/share/tasks12/launch
+[3.069s] copying launch/tasks12_launch.py -> /home/vscode/workspace/path-planning/install/tasks12/share/tasks12/launch
+[3.087s] running install_egg_info
+[3.106s] Copying ../../build/tasks12/tasks12.egg-info to /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info
+[3.375s] running install_scripts
+[3.455s] Installing demo_lidar script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12
+[3.465s] Installing wall_follower script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12
+[3.477s] Installing wall_follower_lidar script to /home/vscode/workspace/path-planning/install/tasks12/lib/tasks12
+[3.491s] writing list of installed files to '/home/vscode/workspace/path-planning/build/tasks12/install.log'
+[3.512s] Invoked command in '/home/vscode/workspace/path-planning/src/tasks12' returned '0': PYTHONPATH=/home/vscode/workspace/path-planning/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/tasks12 build --build-base /home/vscode/workspace/path-planning/build/tasks12/build install --record /home/vscode/workspace/path-planning/build/tasks12/install.log --single-version-externally-managed install_data

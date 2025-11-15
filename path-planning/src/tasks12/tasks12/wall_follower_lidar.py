@@ -12,7 +12,7 @@ class wall_follower_lidar(Node):
         self.get_logger().info('==========Lidar Wall Follower Node initialized===========')
 
         self.theta = 50.0 
-        self.good_distance = 0.6
+        self.good_distance = 0.5
 
         # Controller gains
         self.Kp = 1.0  # Proportional gain
@@ -29,21 +29,15 @@ class wall_follower_lidar(Node):
         # ROS2 setup
         self.pub = self.create_publisher(AckermannDriveStamped, '/drive', 10)
         self.create_subscription(LaserScan, '/scan', self.follow_wall, 10)
-        self.create_subscription(Bool, '/brake', self.emergency_brake, 10)
-        self.ebrake = False
-
-    def emergency_brake(self, brake: Bool):
-        """Handle emergency brake signals from safety system."""
-        self.ebrake = brake.data
 
     def follow_wall(self, scan: LaserScan):
         scanl = list(scan.ranges)
         """Main wall following algorithm using lookahead distance method."""
-        angle_range_rad = math.radians(270.0)  # Total Lidar field of view
+        angle_range_rad = math.radians(120.0)  # Total Lidar field of view
         theta_rad = math.radians(self.theta) 
 
-        index_b = int(1080*(math.pi/2 - scan.angle_min)/angle_range_rad)  
-        index_a = index_b - int(1080*theta_rad/angle_range_rad)  
+        index_b = int(192*(math.pi/2 - scan.angle_min)/angle_range_rad)  
+        index_a = index_b - int(192*theta_rad/angle_range_rad)  
 
         b = scan.ranges[index_b] 
         a = scan.ranges[index_a] 
@@ -62,9 +56,10 @@ class wall_follower_lidar(Node):
         # PD control for steering
         steering_angle = self.Kp * current_error + self.Kd * (self.prev_error - current_error)
 
-        if (max(scanl[180:900]) <= 1.1):
+        # Simple distance-based brake
+        if (max(scanl) <= 1.1):
             msg = AckermannDriveStamped()
-            msg.drive.steering_angle = scan.angle_min + (1080/2) * scan.angle_increment
+            msg.drive.steering_angle = scan.angle_min + (192/2) * scan.angle_increment
             msg.drive.speed = 0.0
             self.pub.publish(msg)
             return
@@ -85,10 +80,6 @@ class wall_follower_lidar(Node):
         # Update state for next iteration
         self.prev_error = current_error
         self.prev_steering_angle = steering_angle
-
-        # Publish only if not emergency braking
-        if not self.ebrake:
-            self.pub.publish(msg)
         
 def main():
     rclpy.init()

@@ -1,4 +1,5 @@
 import math
+import time
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
@@ -27,8 +28,33 @@ class demo_lidar(Node):
         scan = []
         rays_in_scan = 192
 
+        #scan[0] = right side
+        #scan[-1] = left side
+
+        #set middle distance
+        midright = rays_in_scan/2 - 1
+        midleft = rays_in_scan/2
+        scan[midright] = 10.0
+        scan[midleft] = 10.0
+
+        #left side
+        leftmost = 0.5/math.sin(math.radians(60.0))
+        leftdecrement = (10.0 - leftmost)/(rays_in_scan/2)
+        for i in range(rays_in_scan/2):
+            scan[i+midleft] = scan[midleft] - i*leftdecrement
+
+        #right side
+        rightmost = 0.25/math.sin(math.radians(60.0))
+        rightincrement = (10.0 - rightmost)/(rays_in_scan/2)
+        for i in range(rays_in_scan/2):
+            scan[i] = scan[midright] + i*rightincrement
+
+        self.get_logger.info(f'Scan: {scan}')
+
+        time.sleep(2.0)
 
         lidar_msg.ranges = scan
+        self.pub.publish(lidar_msg)
 
         
 def main():

@@ -25,7 +25,9 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'gap_follower = tasks12.gap_follower:main',
+            'wall_follower = tasks12.wall_follower:main',
+            'wall_follower_lidar = tasks12.wall_follower_lidar:main',
+            'demo_lidar = tasks12.demo_lidar:main',
         ],
     },
 )

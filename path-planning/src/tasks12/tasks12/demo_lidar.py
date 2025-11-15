@@ -31,9 +31,6 @@ class demo_lidar(Node):
         rays_in_scan = 192
         scan = [0] * rays_in_scan
 
-        #scan[0] = right side
-        #scan[-1] = left side
-
         #set middle distance
         midright = int(rays_in_scan/2 - 1)
         midleft = int(rays_in_scan/2)
@@ -50,7 +47,7 @@ class demo_lidar(Node):
         for j in range(0, int(rays_in_scan/2)):
             scan[j+midleft] = 10.0 - (j+1)*leftdecrement
 
-        self.get_logger().info(f'Scan: {scan}')
+        # self.get_logger().info(f'Scan: {scan}')
         self.get_logger().info(f'Distance in the middle: {scan[int(len(scan)/2)]}')
         self.get_logger().info(f'Distance at the left: {scan[-1]}')
         self.get_logger().info(f'Distance at the right: {scan[0]}')        

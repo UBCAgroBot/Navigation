@@ -36,7 +36,7 @@ class wall_follower_lidar(Node):
         angle_range_rad = math.radians(120.0)  # Total Lidar field of view
         theta_rad = math.radians(self.theta) 
 
-        index_b = int(192*(math.pi/2 - scan.angle_min)/angle_range_rad)  
+        index_b = len(scan.ranges) - 1
         index_a = index_b - int(192*theta_rad/angle_range_rad)  
 
         b = scan.ranges[index_b] 
@@ -55,6 +55,7 @@ class wall_follower_lidar(Node):
 
         # PD control for steering
         steering_angle = self.Kp * current_error + self.Kd * (self.prev_error - current_error)
+        self.get_logger().info(f'Steering angle: {steering_angle}')
 
         # Simple distance-based brake
         if (max(scanl) <= 1.1):
@@ -71,6 +72,7 @@ class wall_follower_lidar(Node):
         else:
             self.speed = 1.0
 
+        self.get_logger().info(f'Speed: {self.speed}')
 
         # Create and publish drive command
         msg = AckermannDriveStamped()

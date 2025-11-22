@@ -61,8 +61,8 @@ ekf_test/
 The EKF configuration file:
 
 - Defines two inputs:
-  - odom0 – Odometry input (e.g., /odom)
-  - imu0 – IMU input (e.g., /imu)
+  - `odom0` – Odometry input (e.g., `/odom`)
+  - `imu0` – IMU input (e.g., `/imu`)
 
 - Specifies which fields to trust from each sensor:
   - IMU: orientation + angular velocity (no linear acceleration in this simple test).

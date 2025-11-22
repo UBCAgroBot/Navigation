@@ -1,4 +1,4 @@
-# Simulating straight-line motion with EKF from `robot_localization`
+# Simulating motion with EKF from `robot_localization`
 
 This package (`ekf_test`) sets up a simple **sensor fusion pipeline** in ROS 2 using the
 [`robot_localization`](https://github.com/cra-ros-pkg/robot_localization) package.

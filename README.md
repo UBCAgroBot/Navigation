@@ -146,8 +146,8 @@ source install/setup.bash
 --- 
 
 ## Running the System
-# 1. Run the Fake Sensor Publisher
-ros2 run ekf_test ekf_publisher
+## 1. Run the Fake Sensor Publisher
+```ros2 run ekf_test ekf_publisher```
 
 
 This publishes:
@@ -155,7 +155,7 @@ This publishes:
 /odom
 /imu
 ```
-# 2. Run robot_localization EKF Node with YAML Parameters
+## 2. Run robot_localization EKF Node with YAML Parameters
 
 Using an absolute path example:
 ```bash
@@ -170,14 +170,14 @@ ros2 run robot_localization ekf_node \
   --ros-args \
   --params-file $(ros2 pkg prefix ekf_test)/share/ekf_test/config/ekf.yaml
 ```
-# 3. Visualize in RViz
+## 3. Visualize in RViz
 
 Start RViz:
 
-rviz2
+```rviz2```
 
 
-# In RViz:
+## In RViz:
 
 1. Add a display for Odometry or Pose and set the topic to:
 - ```/odometry/filtered```

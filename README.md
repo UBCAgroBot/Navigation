@@ -59,23 +59,18 @@ ekf_test/
 
 ---
 
-EKF Configuration (ekf.yaml)
+## EKF Configuration (ekf.yaml)
 
 The EKF configuration file:
 
-Defines two inputs:
+- Defines two inputs:
+  - odom0 – Odometry input (e.g., /odom)
+  - imu0 – IMU input (e.g., /imu)
 
-odom0 – Odometry input (e.g., /odom)
-
-imu0 – IMU input (e.g., /imu)
-
-Specifies which fields to trust from each sensor:
-
-IMU: orientation + angular velocity (no linear acceleration in this simple test).
-
-Odometry: forward linear velocity + pose in the x direction.
-
-Ensures the topics match what the publisher node is using.
+- Specifies which fields to trust from each sensor:
+  - IMU: orientation + angular velocity (no linear acceleration in this simple test).
+  - Odometry: forward linear velocity + pose in the x direction.
+- Ensures the topics match what the publisher node is using.
 
 High-level idea (not full YAML):
 
@@ -113,41 +108,31 @@ Adjust the actual *_config arrays to match your exact setup – this is just a s
 
 ---
 
-Fake Sensor Publisher (ekf_publisher.cpp)
+## Fake Sensor Publisher (ekf_publisher.cpp)
 
 The ekf_publisher node simulates a robot moving in a straight line at a constant speed.
 
 Behavior
 
-IMU (/imu topic):
-
-Published at 100 Hz.
-
-Orientation: maintains a constant heading.
-
-Angular velocity: 0 (no rotation).
-
-Linear acceleration: 0 (constant velocity, so no acceleration).
-
-Odometry (/odom topic):
+- IMU (/imu topic):
+ - Published at 100 Hz.
+ - Orientation: maintains a constant heading.
+ - Angular velocity: 0 (no rotation).
+ - Linear acceleration: 0 (constant velocity, so no acceleration).
+- Odometry (/odom topic):
 
 Published at a lower but steady rate (e.g., 30–50 Hz).
-
-Linear velocity: constant (e.g., 1.0 m/s along +x).
-
-Angular velocity: 0.
-
-Pose: x increases linearly over time, y = 0, heading constant.
+- Linear velocity: constant (e.g., 1.0 m/s along +x).
+- Angular velocity: 0.
+- Pose: x increases linearly over time, y = 0, heading constant.
 
 The node typically:
+1. Stores a start time.
+2. Computes position as x = v * t.
+3. Fills out nav_msgs/msg/Odometry and sensor_msgs/msg/Imu messages.
+4. Publishes them on /odom and /imu.
 
-Stores a start time.
-
-Computes position as x = v * t.
-
-Fills out nav_msgs/msg/Odometry and sensor_msgs/msg/Imu messages.
-
-Publishes them on /odom and /imu.
+---
 
 Building the Package
 
@@ -158,6 +143,8 @@ colcon build
 source install/setup.bash
 
 ```
+--- 
+
 Running the System
 1. Run the Fake Sensor Publisher
 ros2 run ekf_test ekf_publisher
@@ -210,7 +197,7 @@ Set the Target Frame to base_link so the camera tracks the robot arrow.
 ---
 
 
-Validation: Straight-Line Check
+## Validation: Straight-Line Check
 
 With everything running:
 
@@ -234,7 +221,7 @@ The timestamps are being set correctly in your publisher.
 
 ---
 
-Useful ROS 2 Commands
+## Useful ROS 2 Commands
 
 List all topics:
 ```

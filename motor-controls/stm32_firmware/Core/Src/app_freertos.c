@@ -22,6 +22,7 @@
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
+#include "tim.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -61,12 +62,25 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 
+osThreadId_t pwmTaskHandle;
+uint32_t pwmTaskBuffer[512];          // stack (adjust if needed)
+osStaticThreadDef_t pwmTaskControlBlock;
+const osThreadAttr_t pwmTask_attributes = {
+  .name = "pwmTask",
+  .stack_mem = &pwmTaskBuffer[0],
+  .stack_size = sizeof(pwmTaskBuffer),
+  .cb_mem = &pwmTaskControlBlock,
+  .cb_size = sizeof(pwmTaskControlBlock),
+  .priority = (osPriority_t) osPriorityNormal,
+};
+
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
+void StartPWMTask(void *arg);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -99,6 +113,7 @@ void MX_FREERTOS_Init(void) {
   /* Create the thread(s) */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  pwmTaskHandle = osThreadNew(StartPWMTask, NULL, &pwmTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -123,9 +138,20 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    osDelay (1);
   }
   /* USER CODE END StartDefaultTask */
+}
+
+
+void StartPWMTask(void *arg) 
+{
+
+  for(;;)
+  {
+    osDelay(1);
+  }
+
 }
 
 /* Private application code --------------------------------------------------*/

@@ -39,7 +39,7 @@ sudo apt install ros-${ROS_DISTRO}-robot-localization
 
 You don’t need to add robot_localization to this repo; it’s installed system-wide.
 
-Package Structure
+## Package Structure
 
 Approximate layout of the ekf_test package:
 ```bash

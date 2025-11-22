@@ -57,6 +57,8 @@ ekf_test/
     └── ekf_publisher.cpp
 ```
 
+---
+
 EKF Configuration (ekf.yaml)
 
 The EKF configuration file:
@@ -108,6 +110,8 @@ ekf_filter_node:
     world_frame: odom
 ```
 Adjust the actual *_config arrays to match your exact setup – this is just a sketch.
+
+---
 
 Fake Sensor Publisher (ekf_publisher.cpp)
 
@@ -203,6 +207,9 @@ For the camera:
 
 Set the Target Frame to base_link so the camera tracks the robot arrow.
 
+---
+
+
 Validation: Straight-Line Check
 
 With everything running:
@@ -224,6 +231,8 @@ The IMU and odometry topics and frame IDs match what’s in ekf.yaml.
 The correct fields are enabled in odom0_config and imu0_config.
 
 The timestamps are being set correctly in your publisher.
+
+---
 
 Useful ROS 2 Commands
 

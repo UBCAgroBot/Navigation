@@ -1,3 +1,0 @@
-[console_scripts]
-gap_follower = tasks12.gap_follower:main
-

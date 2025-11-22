@@ -1,0 +1,31 @@
+running egg_info
+creating ../../build/tasks12/tasks12.egg-info
+writing ../../build/tasks12/tasks12.egg-info/PKG-INFO
+writing dependency_links to ../../build/tasks12/tasks12.egg-info/dependency_links.txt
+writing entry points to ../../build/tasks12/tasks12.egg-info/entry_points.txt
+writing requirements to ../../build/tasks12/tasks12.egg-info/requires.txt
+writing top-level names to ../../build/tasks12/tasks12.egg-info/top_level.txt
+writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+reading manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/vscode/workspace/path-planning/build/tasks12/build
+creating /home/vscode/workspace/path-planning/build/tasks12/build/lib
+creating /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+copying tasks12/__init__.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+running install
+running install_lib
+creating /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/__init__.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index
+creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index
+creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index/packages
+copying resource/tasks12 -> /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index/packages
+copying package.xml -> /home/vscode/workspace/path-planning/install/tasks12/share/tasks12
+running install_egg_info
+Copying ../../build/tasks12/tasks12.egg-info to /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info
+running install_scripts
+writing list of installed files to '/home/vscode/workspace/path-planning/build/tasks12/install.log'

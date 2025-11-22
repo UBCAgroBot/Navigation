@@ -20,6 +20,7 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "dma.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -94,6 +95,7 @@ int main(void)
   MX_DMA_Init();
   MX_UART5_Init();
   MX_TIM2_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -104,7 +106,6 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
 
   /* We should never get here as control is now taken by the scheduler */
 
@@ -113,7 +114,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, 50);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

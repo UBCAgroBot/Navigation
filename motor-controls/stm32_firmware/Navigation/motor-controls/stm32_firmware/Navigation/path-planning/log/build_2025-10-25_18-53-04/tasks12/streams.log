@@ -1,0 +1,33 @@
+[1.324s] Invoking command in '/home/vscode/workspace/path-planning/src/tasks12': PYTHONPATH=/home/vscode/workspace/path-planning/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/tasks12 build --build-base /home/vscode/workspace/path-planning/build/tasks12/build install --record /home/vscode/workspace/path-planning/build/tasks12/install.log --single-version-externally-managed install_data
+[1.708s] running egg_info
+[1.709s] creating ../../build/tasks12/tasks12.egg-info
+[1.710s] writing ../../build/tasks12/tasks12.egg-info/PKG-INFO
+[1.711s] writing dependency_links to ../../build/tasks12/tasks12.egg-info/dependency_links.txt
+[1.711s] writing entry points to ../../build/tasks12/tasks12.egg-info/entry_points.txt
+[1.711s] writing requirements to ../../build/tasks12/tasks12.egg-info/requires.txt
+[1.711s] writing top-level names to ../../build/tasks12/tasks12.egg-info/top_level.txt
+[1.712s] writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[1.714s] reading manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[1.715s] writing manifest file '../../build/tasks12/tasks12.egg-info/SOURCES.txt'
+[1.715s] running build
+[1.715s] running build_py
+[1.716s] creating /home/vscode/workspace/path-planning/build/tasks12/build
+[1.716s] creating /home/vscode/workspace/path-planning/build/tasks12/build/lib
+[1.717s] creating /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+[1.718s] copying tasks12/__init__.py -> /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12
+[1.719s] running install
+[1.720s] running install_lib
+[1.721s] creating /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+[1.722s] copying /home/vscode/workspace/path-planning/build/tasks12/build/lib/tasks12/__init__.py -> /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12
+[1.723s] byte-compiling /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12/__init__.py to __init__.cpython-310.pyc
+[1.724s] running install_data
+[1.725s] creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index
+[1.725s] creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index
+[1.726s] creating /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index/packages
+[1.727s] copying resource/tasks12 -> /home/vscode/workspace/path-planning/install/tasks12/share/ament_index/resource_index/packages
+[1.727s] copying package.xml -> /home/vscode/workspace/path-planning/install/tasks12/share/tasks12
+[1.727s] running install_egg_info
+[1.730s] Copying ../../build/tasks12/tasks12.egg-info to /home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages/tasks12-0.0.0-py3.10.egg-info
+[1.732s] running install_scripts
+[1.762s] writing list of installed files to '/home/vscode/workspace/path-planning/build/tasks12/install.log'
+[1.795s] Invoked command in '/home/vscode/workspace/path-planning/src/tasks12' returned '0': PYTHONPATH=/home/vscode/workspace/path-planning/build/tasks12/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/path-planning/install/tasks12/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/tasks12 build --build-base /home/vscode/workspace/path-planning/build/tasks12/build install --record /home/vscode/workspace/path-planning/build/tasks12/install.log --single-version-externally-managed install_data

@@ -134,7 +134,7 @@ The node typically:
 
 ---
 
-Building the Package
+## Building the Package
 
 From your workspace root (e.g., ~/workspace/ekf_package):
 
@@ -145,7 +145,7 @@ source install/setup.bash
 ```
 --- 
 
-Running the System
+## Running the System
 1. Run the Fake Sensor Publisher
 ros2 run ekf_test ekf_publisher
 
@@ -153,7 +153,6 @@ ros2 run ekf_test ekf_publisher
 This publishes:
 ```bash
 /odom
-
 /imu
 ```
 2. Run robot_localization EKF Node with YAML Parameters
@@ -180,19 +179,15 @@ rviz2
 
 In RViz:
 
-Add a display for Odometry or Pose and set the topic to:
+1. Add a display for Odometry or Pose and set the topic to:
+- ```/odometry/filtered```
 
-```/odometry/filtered```
+2. Set:
+- Global Frame: odom
+- Reference / Fixed Frame: odom (since that’s the frame used by the EKF).
 
-Set:
-
-Global Frame: odom
-
-Reference / Fixed Frame: odom (since that’s the frame used by the EKF).
-
-For the camera:
-
-Set the Target Frame to base_link so the camera tracks the robot arrow.
+3. For the camera:
+- Set the Target Frame to base_link so the camera tracks the robot arrow.
 
 ---
 
@@ -200,41 +195,26 @@ Set the Target Frame to base_link so the camera tracks the robot arrow.
 ## Validation: Straight-Line Check
 
 With everything running:
-
-The ```/odometry/filtered``` topic should show a pose that moves in a straight line along the x-axis.
-
-The arrow in RViz should:
-
-Move forward at constant speed.
-
-Maintain constant orientation (no rotation, no drift in y).
-
+- The ```/odometry/filtered``` topic should show a pose that moves in a straight line along the x-axis.
+- The arrow in RViz should:
+- Move forward at constant speed.
+- Maintain constant orientation (no rotation, no drift in y).
 If the output drifts or curves:
-
-Check that:
-
-The IMU and odometry topics and frame IDs match what’s in ekf.yaml.
-
-The correct fields are enabled in odom0_config and imu0_config.
-
-The timestamps are being set correctly in your publisher.
+- Check that:
+    - The IMU and odometry topics and frame IDs match what’s in ekf.yaml.
+    - The correct fields are enabled in odom0_config and imu0_config.
+    - The timestamps are being set correctly in your publisher.
 
 ---
 
 ## Useful ROS 2 Commands
 
 List all topics:
-```
-ros2 topic list
-```
+```ros2 topic list```
 
 Echo the fused output:
-```
-ros2 topic echo /odometry/filtered
-```
+```ros2 topic echo /odometry/filtered```
 
 Check the fake sensor topics:
-```
-ros2 topic echo /odom
-ros2 topic echo /imu
-```
+```ros2 topic echo /odom
+ros2 topic echo /imu```

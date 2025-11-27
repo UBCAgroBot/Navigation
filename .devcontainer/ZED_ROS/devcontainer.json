@@ -1,0 +1,36 @@
+{
+    "name": "ROS Dev Container",
+    "remoteUser": "vscode",
+    "image": "agrobotappliedai/ros-containers:latest",
+    "customizations": {
+        "settings": {
+            "terminal.integrated.shell.linux": "bash"
+        }
+    },
+    "workspaceFolder": "/home/vscode/workspace",
+    "workspaceMount": "source=.,target=/home/vscode/workspace,type=bind,consistency=cached",
+    
+    // 1. FIX: Uncommented to allow GUI apps (RViz) to reach your screen
+    "mounts": [
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached"
+    ],
+
+    // 2. CRITICAL FIX: Stops the "iptables" crash by preventing VS Code from trying to change User ID
+    "updateRemoteUserUID": false,
+
+    "runArgs": [
+        "--net=host",
+        "-it",
+        "--rm",
+        "--privileged",
+        "--runtime=nvidia",
+        "--gpus=all",
+        // 3. FIX: Added 'graphics' and 'display' so the GPU can render 3D windows
+        "--env=NVIDIA_DRIVER_CAPABILITIES=video,compute,utility,graphics,display",
+        "--env=DISPLAY",
+        "--env=QT_X11_NO_MITSHM=1"
+    ],
+    
+    // 4. FIX: Claim file ownership manually since we disabled 'updateRemoteUserUID'
+    "postStartCommand": "bash -c 'sudo chown -R vscode:vscode /home/vscode/workspace && source /opt/ros/humble/setup.bash'"
+}

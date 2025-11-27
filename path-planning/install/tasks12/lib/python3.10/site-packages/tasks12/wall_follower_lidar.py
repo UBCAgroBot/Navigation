@@ -14,6 +14,8 @@ class wall_follower_lidar(Node):
         self.theta = 50.0 
         self.good_distance = 0.5
 
+        self.max_dist = 8.0
+
         # Controller gains
         self.Kp = 1.0  # Proportional gain
         self.Kd = 0.1  # Derivative gain

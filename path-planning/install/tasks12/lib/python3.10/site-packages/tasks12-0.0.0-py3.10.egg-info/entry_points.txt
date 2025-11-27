@@ -1,5 +1,6 @@
 [console_scripts]
 demo_lidar = tasks12.demo_lidar:main
+gap_follower_node = tasks12.gap_follower_node
 wall_follower = tasks12.wall_follower:main
 wall_follower_lidar = tasks12.wall_follower_lidar:main
 

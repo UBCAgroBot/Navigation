@@ -1,21 +1,164 @@
 <?xml version="1.0" ?>
-<sdf version="1.8">
-  <model name="my_robot">
+<sdf version="1.9">
+  <model name="four_wheel_robot">
+    <pose>0 0 0.1 0 0 0</pose>
     <static>false</static>
 
+    <!-- MAIN BODY -->
     <link name="base_link">
-      <collision name="collision">
-        <geometry><box><size>0.6 0.4 0.2</size></box></geometry>
+      <pose>0 0 0.1 0 0 0</pose>
+
+      <inertial>
+        <mass>5.0</mass>
+        <inertia>
+          <ixx>0.2</ixx> <iyy>0.2</iyy> <izz>0.2</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="base_collision">
+        <geometry>
+          <box>
+            <size>0.6 0.4 0.2</size>
+          </box>
+        </geometry>
       </collision>
 
-      <visual name="visual">
-        <geometry><box><size>0.6 0.4 0.2</size></box></geometry>
+      <visual name="base_visual">
+        <geometry>
+          <box>
+            <size>0.6 0.4 0.2</size>
+          </box>
+        </geometry>
         <material>
-          <ambient>0.1 0.6 0.1 1</ambient>
-          <diffuse>0.1 0.8 0.2 1</diffuse>
+          <ambient>0.2 0.2 0.8 1</ambient>
+          <diffuse>0.2 0.2 0.8 1</diffuse>
         </material>
       </visual>
+
+   <sensor name='gpu_lidar' type='gpu_lidar'>"
+    <pose>0 0 0 0 0 0</pose>
+    <topic>lidar</topic>
+    <update_rate>10</update_rate>
+    <ray>
+        <scan>
+            <horizontal>
+                <samples>192</samples>
+                <resolution>1</resolution>
+                <min_angle>-1.0472</min_angle>
+                <max_angle>1.0472</max_angle>
+            </horizontal>
+            <vertical>
+                <samples>144</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.7854</min_angle>
+                <max_angle>0.7854</max_angle>
+            </vertical>
+        </scan>
+        <range>
+            <min>0.1</min>
+            <max>75.0</max>
+            <resolution>0.01</resolution>
+        </range>
+
+       <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.01</stddev>
+       </noise>
+    </ray>
+    <always_on>1</always_on>
+    <visualize>true</visualize>
+  </sensor>
+
+  <sensor name="imu_sensor" type="imu">
+    <always_on>1</always_on>
+    <update_rate>1</update_rate>
+    <visualize>true</visualize>
+    <topic>imu</topic>
+  </sensor>
     </link>
+
+<!-- 4 WHEELS -->
+    <!-- front-left -->
+    <link name="wheel_fl">
+      <pose>0.25 0.20 0.05 0 0 0</pose>
+      <inertial>
+        <mass>0.2</mass>
+        <inertia>
+          <ixx>0.001</ixx> <iyy>0.001</iyy> <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.03</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.03</length>
+          </cylinder>
+        </geometry>
+        <material><diffuse>0.1 0.1 0.1 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- front-right -->
+    <link name="wheel_fr">
+      <pose>0.25 -0.20 0.05 0 0 0</pose>
+      <collision name="collision">
+        <geometry><cylinder><radius>0.05</radius><length>0.03</length></cylinder></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry><cylinder><radius>0.05</radius><length>0.03</length></cylinder></geometry>
+      </visual>
+    </link>
+
+    <!-- rear-left -->
+    <link name="wheel_rl">
+      <pose>-0.25 0.20 0.05 0 0 0</pose>
+      <collision name="collision">
+        <geometry><cylinder><radius>0.05</radius><length>0.03</length></cylinder></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry><cylinder><radius>0.05</radius><length>0.03</length></cylinder></geometry>
+      </visual>
+    </link>
+
+<!-- rear-right -->
+    <link name="wheel_rr">
+      <pose>-0.25 -0.20 0.05 0 0 0</pose>
+      <collision name="collision">
+        <geometry><cylinder><radius>0.05</radius><length>0.03</length></cylinder></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry><cylinder><radius>0.05</radius><length>0.03</length></cylinder></geometry>
+      </visual>
+    </link>
+
+    <!-- FIXED JOINTS (Wheels don't rotate yet) -->
+    <joint name="joint_fl" type="fixed">
+      <parent>base_link</parent>
+      <child>wheel_fl</child>
+    </joint>
+
+    <joint name="joint_fr" type="fixed">
+      <parent>base_link</parent>
+      <child>wheel_fr</child>
+    </joint>
+
+    <joint name="joint_rl" type="fixed">
+      <parent>base_link</parent>
+      <child>wheel_rl</child>
+    </joint>
+
+    <joint name="joint_rr" type="fixed">
+      <parent>base_link</parent>
+      <child>wheel_rr</child>
+    </joint>
   </model>
 </sdf>
-

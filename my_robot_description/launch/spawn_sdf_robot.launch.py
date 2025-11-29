@@ -23,7 +23,9 @@ def generate_launch_description():
             arguments=[
                 '-file', LaunchConfiguration('sdf_path'),
                 '-name', 'my_robot',
-                '-z', '0.3'
+                '-z', '0.5',
+                '-x', '0',
+                '-y', '-11.25'
             ],
             output='screen'
         )

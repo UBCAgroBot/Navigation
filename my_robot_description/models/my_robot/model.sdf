@@ -4,6 +4,29 @@
     <pose>0 0 0.1 0 0 0</pose>
     <static>false</static>
 
+
+    <!--
+    <plugin
+    filename="libignition-gazebo-diff-drive-system.so"
+    name="ignition::gazebo::systems::DiffDrive">
+
+    <left_joint>left_wheel_joint</left_joint>
+    <right_joint>right_wheel_joint</right_joint>
+
+    <wheel_separation>1.2</wheel_separation>
+    <wheel_radius>0.4</wheel_radius>
+
+    <topic>cmd_vel</topic>               
+    <odom_topic>odom</odom_topic>         
+    <tf_topic>tf</tf_topic>               
+    <frame>odom</frame_id>             
+    <child_frame_id>base_link</child_frame_id> 
+    </plugin>
+    -->
+
+
+
+
     <!-- MAIN BODY -->
     <link name="base_link">
       <pose>0 0 0.1 0 0 0</pose>

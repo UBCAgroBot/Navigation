@@ -13,6 +13,24 @@
    <render_engine>ogre2</render_engine> 
    </plugin>
 
+    <plugin
+    filename="libignition-gazebo-diff-drive-system.so"
+    name="ignition::gazebo::systems::DiffDrive">
+
+    <left_joint>left_wheel_joint</left_joint>
+    <right_joint>right_wheel_joint</right_joint>
+
+    <wheel_separation>1.2</wheel_separation>
+    <wheel_radius>0.4</wheel_radius>
+
+    <topic>cmd_vel</topic>
+    <odom_topic>odom</odom_topic>
+    <tf_topic>tf</tf_topic>
+    <frame>odom</frame_id>
+    <child_frame_id>base_link</child_frame_id>
+    </plugin>
+
+
 
     <!-- Change max step size to increase the simulation speed but decrease the accuracy. -->
     <physics name="10ms" type="ignored">

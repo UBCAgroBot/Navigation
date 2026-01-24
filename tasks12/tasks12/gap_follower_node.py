@@ -2,52 +2,63 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
+import math
 
-class forward_node(Node):
+class gap_follower_node(Node):
     def __init__(self):
-        super().__init__('forward_node')
+        super().__init__('simple_gap_follower')
 
-        self.get_logger().info('========== Simple Forward Twist Node Initialized ==========')
-
-        # Subscribe to LiDAR (only to trigger callback)
-        self.create_subscription(
+        self.scan_sub = self.create_subscription(
             LaserScan,
-            '/lidar',
+            '/scan',
             self.lidar_callback,
             10
         )
 
-        # Publisher for Twist commands
         self.cmd_pub = self.create_publisher(
             Twist,
             '/cmd_vel',
             10
         )
 
-        # Constant forward velocity
-        self.linear_speed = 1.0   # m/s
-        self.angular_speed = 0.0  # rad/s
+        self.forward_speed = 0.3      # m/s
+        self.stop_distance = 0.8      # meters
+
+        self.get_logger().info('Simple Gap Follower started')
 
     def lidar_callback(self, scan: LaserScan):
-        # Print on every LiDAR callback
-        print("lidar...")
+        # Look at a small window in front of the robot
+        num_ranges = len(scan.ranges)
+        center_index = num_ranges // 2
+        window = 20  # +- 20 samples around center
 
-        # Publish constant forward motion
-        msg = Twist()
-        msg.linear.x = self.linear_speed
-        msg.linear.y = 0.0
-        msg.linear.z = 0.0
+        front_ranges = scan.ranges[
+            center_index - window : center_index + window
+        ]
 
-        msg.angular.x = 0.0
-        msg.angular.y = 0.0
-        msg.angular.z = self.angular_speed  # 0 = straight
+        # Filter invalid readings
+        front_ranges = [
+            r for r in front_ranges
+            if not math.isinf(r) and not math.isnan(r)
+        ]
 
-        self.cmd_pub.publish(msg)
+        cmd = Twist()
+
+        if front_ranges and min(front_ranges) > self.stop_distance:
+            # Free space ahead → move forward
+            cmd.linear.x = self.forward_speed
+            cmd.angular.z = 0.0
+        else:
+            # Obstacle too close → stop
+            cmd.linear.x = 0.0
+            cmd.angular.z = 0.0
+
+        self.cmd_pub.publish(cmd)
 
 
-def main():
-    rclpy.init()
-    node = forward_node()
+def main(args=None):
+    rclpy.init(args=args)
+    node = gap_follower_node()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()

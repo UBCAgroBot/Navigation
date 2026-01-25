@@ -42,15 +42,20 @@ RUN dos2unix /scripts/install-rslidar-sdk.sh && chmod +x /scripts/install-rslida
     && /bin/bash /scripts/install-rslidar-sdk.sh
 RUN echo "source /home/$USERNAME/rslidar_build/install/setup.bash" >> ~/.bashrc
 
-# 2. Copy and run FastLIO2
-# USER root
-COPY ./scripts/install-fastlio2.sh /scripts/
-RUN dos2unix /scripts/install-fastlio2.sh && chmod +x /scripts/install-fastlio2.sh \
-    && /bin/bash /scripts/install-fastlio2.sh 
-# --- FIXED SECTION END ----
+# copy scripts
+COPY ./scripts/install-fastlio2-system.sh /scripts/
+COPY ./scripts/install-fastlio2-ws.sh /scripts/
+RUN dos2unix /scripts/*.sh && chmod +x /scripts/*.sh
 
-USER vscode 
-RUN echo "source /home/$USERNAME/fastlio2-build/install/setup.bash" >> ~/.bashrc
+# system part as root
+USER root
+RUN /bin/bash /scripts/install-fastlio2-system.sh
+
+# workspace part as vscode
+USER vscode
+ENV TARGET_HOME=/home/vscode
+RUN /bin/bash /scripts/install-fastlio2-ws.sh
+RUN echo "source /home/vscode/fastlio2-build/install/setup.bash" >> ~/.bashrc
 
 WORKDIR /home/$USERNAME/workspace
 ENV LANG=en_US.UTF-8

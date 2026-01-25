@@ -33,14 +33,14 @@ RUN usermod -aG dialout ${USERNAME}
 USER $USERNAME
 
 RUN mkdir -p /home/$USERNAME/workspace
-WORKDIR /home/$USERNAME
+WORKDIR /home/$USERNAME/workspace
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 
 USER root
 COPY ./scripts/install-rslidar-sdk.sh /scripts/
 RUN dos2unix /scripts/install-rslidar-sdk.sh && chmod +x /scripts/install-rslidar-sdk.sh \
     && /bin/bash /scripts/install-rslidar-sdk.sh
-RUN echo "source /home/$USERNAME/rslidar_build/install/setup.bash" >> ~/.bashrc
+RUN echo "source /home/$USERNAME/workspace/rslidar_build/install/setup.bash" >> ~/.bashrc
 
 # copy scripts
 COPY ./scripts/install-fastlio2-system.sh /scripts/
@@ -53,9 +53,9 @@ RUN /bin/bash /scripts/install-fastlio2-system.sh
 
 # workspace part as vscode
 USER vscode
-ENV TARGET_HOME=/home/vscode
+ENV TARGET_HOME=/home/vscode/workspace
 RUN /bin/bash /scripts/install-fastlio2-ws.sh
-RUN echo "source /home/vscode/fastlio2-build/install/setup.bash" >> ~/.bashrc
+RUN echo "source /home/vscode/workspace/fastlio2-build/install/setup.bash" >> ~/.bashrc
 
 WORKDIR /home/$USERNAME/workspace
 ENV LANG=en_US.UTF-8

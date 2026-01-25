@@ -5,7 +5,7 @@ set +u
 source /opt/ros/humble/setup.bash
 set -u
 
-TARGET_HOME="${TARGET_HOME:-/home/vscode}"
+TARGET_HOME="${TARGET_HOME:-/home/vscode/workspace}"
 mkdir -p "$TARGET_HOME/fastlio2-build/src"
 cd "$TARGET_HOME/fastlio2-build/src"
 

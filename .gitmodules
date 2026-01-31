@@ -1,0 +1,10 @@
+[submodule "workspace/src/rslidar_sdk"]
+	path = workspace/src/rslidar_sdk
+	url = https://github.com/RoboSense-LiDAR/rslidar_sdk.git
+[submodule "workspace/src/phidgets_drivers"]
+	path = workspace/src/phidgets_drivers
+	url = https://github.com/ros-drivers/phidgets_drivers.git
+	branch = humble
+[submodule "workspace/src/rslidar_msg"]
+	path = workspace/src/rslidar_msg
+	url = https://github.com/RoboSense-LiDAR/rslidar_msg.git

@@ -7,7 +7,7 @@ Steps:
       -e DISPLAY=$DISPLAY \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v /dev:/dev \
-      --mount type=bind,src=/home/agrobot/workspace/sensor_fusion/Navigation/workspace,target=/agrobot/lidar_ws \
+      --mount type=bind,src=/home/agrobot,target=/workspace \
       -w /workspace \
       ros-fastlio:jetson
   ```

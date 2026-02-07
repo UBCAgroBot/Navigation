@@ -18,6 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "PWMlogic.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -69,6 +71,7 @@ static void MX_TIM1_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+
 int main(void)
 {
 
@@ -103,10 +106,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint32_t speed = 5;
   while (1)
   {
     /* USER CODE END WHILE */
-
+    SetMotorSpeedMPS(speed);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

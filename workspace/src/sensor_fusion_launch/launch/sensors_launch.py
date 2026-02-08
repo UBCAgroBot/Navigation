@@ -8,11 +8,12 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
 
+    # Lidar
     lidar_package = 'rslidar_sdk'
     lidar_launch = 'start.py'
 
 
-    other_launch_file_path = PathJoinSubstitution([
+    lidar_launch_path = PathJoinSubstitution([
         FindPackageShare(lidar_package),
         'launch',
         lidar_launch
@@ -26,12 +27,30 @@ def generate_launch_description():
     ])
 
 
+    # IMU
+    imu_package = 'phidgets_spatial'
+    imu_launch = 'spatial-launch.py'
+
+    imu_launch_path = PathJoinSubstitution([
+        FindPackageShare(imu_package),
+        'launch',
+        imu_launch
+    ])
+
+
     return LaunchDescription([
-         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(other_launch_file_path),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(lidar_launch_path),
             # You can also pass arguments to the included launch file
             launch_arguments={
                 'config_file': lidar_config
+            }.items()
+        ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(imu_launch_path),
+            # You can also pass arguments to the included launch file
+            launch_arguments={
+                
             }.items()
         ),
     ])

@@ -22,7 +22,7 @@ def generate_launch_description():
 
     lidar_config = PathJoinSubstitution([
         FindPackageShare(lidar_package),
-        'config_files',
+        'config',
         'rslidar_config.yaml'
     ])
 

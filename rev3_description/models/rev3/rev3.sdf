@@ -57,7 +57,7 @@
       <collision name="base_collision">
         <geometry>
           <box>
-            <size>0.950 0.802 0.370</size>
+            <size>0.950 0.752 0.370</size>
           </box>
         </geometry>
       </collision>

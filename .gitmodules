@@ -8,6 +8,6 @@
 [submodule "workspace/src/rslidar_msg"]
 	path = workspace/src/rslidar_msg
 	url = https://github.com/RoboSense-LiDAR/rslidar_msg.git
-[submodule "workspace/src/fastlio2"]
-	path = workspace/src/fastlio2
-	url = https://github.com/Winsleo/fastlio2.git
+[submodule "workspace/src/FAST_LIO_ROS2_RobosenseM1P"]
+	path = workspace/src/FAST_LIO_ROS2_RobosenseM1P
+	url = https://github.com/MorpheKLT/FAST_LIO_ROS2_RobosenseM1P.git

@@ -1,8 +1,12 @@
 Steps:
 
-Before opening docker, run xhost +local: on jetson terminal. this allows it to get access to display so rviz can work.
+  1. Before opening docker, run on jetson terminal. this allows it to get access to display so rviz can work.
+  2. '''
+     xhost +local:
 
-  1. Open docker with this command (mounts workspace as well)
+     '''
+
+  3. Open docker with this command (mounts workspace as well)
   ```
   sudo docker run -it --rm \
       --net=host \
@@ -14,5 +18,8 @@ Before opening docker, run xhost +local: on jetson terminal. this allows it to g
       -w /workspace \
       ros-fastlio:jetson
   ```
-2. Run ```sudo chown -R $(id -u):$(id -g) .``` (gives root permissions)
-3. Enter top-lvl directory and run ```colcon build```
+4. Run ```sudo chown -R $(id -u):$(id -g) .``` (gives root permissions)
+5. Enter top-lvl directory and run ```colcon build``` to rebuild all packages if changes have been made
+6. Notes:
+   - Currently, in fastlio_config, blind is set to 0.1m, so points closer than that are removed. We may want to modify this after testing
+

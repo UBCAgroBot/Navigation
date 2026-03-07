@@ -461,10 +461,17 @@ void Preprocess::rbsm1p_handler(const sensor_msgs::msg::PointCloud2::UniquePtr &
 
   pcl::PointCloud<rbsm1p_ros::Point> pl_orig;
   pcl::fromROSMsg(*msg, pl_orig);
+
+  std::cout << "Incoming points: " << pl_orig.points.size() << std::endl;
+
+
   int plsize = pl_orig.points.size();
   if (plsize == 0)
     return;
-  pl_surf.reserve(plsize);
+  
+    std::cout << "First timestamp: " << pl_orig.points[0].timestamp << std::endl;
+
+    pl_surf.reserve(plsize);
 
   double start_time = pl_orig.points[0].timestamp; //record the start time of the scan
   for(uint i = 0; i < plsize; ++i)
@@ -483,7 +490,10 @@ void Preprocess::rbsm1p_handler(const sensor_msgs::msg::PointCloud2::UniquePtr &
     added_pt.intensity = pl_orig.points[i].intensity;
     added_pt.curvature = (pl_orig.points[i].timestamp-start_time) * time_unit_scale; //relative time in one scan
     pl_surf.push_back(std::move(added_pt)); //ust std::move to avoid deep copy
+    
   }
+
+  std::cout << "Points after preprocess: " << pl_surf.size() << std::endl;
 }
 
 void Preprocess::default_handler(const sensor_msgs::msg::PointCloud2::UniquePtr &msg)

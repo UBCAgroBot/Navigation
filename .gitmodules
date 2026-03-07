@@ -8,3 +8,6 @@
 [submodule "workspace/src/FAST_LIO_ROS2_RobosenseM1P"]
 	path = workspace/src/FAST_LIO_ROS2_RobosenseM1P
 	url = https://github.com/MorpheKLT/FAST_LIO_ROS2_RobosenseM1P.git
+[submodule "workspace/src/rslidar_sdk/src/rs_driver"]
+	path = workspace/src/rslidar_sdk/src/rs_driver
+	url = https://github.com/RoboSense-LiDAR/rs_driver

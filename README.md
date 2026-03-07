@@ -1,4 +1,7 @@
 Steps:
+
+Before opening docker, run xhost +local: on jetson terminal. this allows it to get access to display so rviz can work.
+
   1. Open docker with this command (mounts workspace as well)
   ```
   sudo docker run -it --rm \

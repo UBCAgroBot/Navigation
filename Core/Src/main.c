@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +32,43 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+/* ---- TMC5160 Register Addresses ---- */
+#define TMC5160_GCONF       0x00
+#define TMC5160_GSTAT       0x01
+#define TMC5160_IHOLD_IRUN  0x10
+#define TMC5160_CHOPCONF    0x6C
+#define TMC5160_VACTUAL     0x22
+#define TMC5160_RAMPMODE    0x20
+#define TMC5160_XACTUAL     0x21
+#define TMC5160_XTARGET     0x2D
+
+/* Velocity mode registers */
+#define TMC5160_VSTART      0x23
+#define TMC5160_A1          0x24
+#define TMC5160_V1          0x25
+#define TMC5160_AMAX        0x28
+#define TMC5160_VMAX        0x27
+#define TMC5160_DMAX        0x29
+#define TMC5160_D1          0x2A
+#define TMC5160_VSTOP       0x2B
+
+/* SPI write flag */
+#define TMC5160_WRITE_BIT   0x80
+
+/* ---- Pin Assignments ---- */
+
+/* PC10 = DRV_ENN (driver enable, active LOW) */
+#define DRV_EN_PIN    GPIO_PIN_10
+#define DRV_EN_PORT   GPIOC
+
+/* PC11 = CSN (SPI chip select for stepper 1) */
+#define CS1_PIN       GPIO_PIN_11
+#define CS1_PORT      GPIOC
+
+/* PB6 = CSN for stepper 2 (unused for now) */
+#define CS2_PIN       GPIO_PIN_6
+#define CS2_PORT      GPIOB
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -40,6 +77,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+SPI_HandleTypeDef hspi1;
+
 TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN PV */
@@ -50,73 +89,170 @@ TIM_HandleTypeDef htim1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
+
+void     TMC5160_CS_Low(GPIO_TypeDef *port, uint16_t pin);
+void     TMC5160_CS_High(GPIO_TypeDef *port, uint16_t pin);
+uint32_t TMC5160_ReadReg(GPIO_TypeDef *cs_port, uint16_t cs_pin, uint8_t reg);
+void     TMC5160_WriteReg(GPIO_TypeDef *cs_port, uint16_t cs_pin, uint8_t reg, uint32_t value);
+void     TMC5160_Init(GPIO_TypeDef *cs_port, uint16_t cs_pin);
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void TMC5160_CS_Low(GPIO_TypeDef *port, uint16_t pin)
+{
+  HAL_GPIO_WritePin(port, pin, GPIO_PIN_RESET);
+}
+
+void TMC5160_CS_High(GPIO_TypeDef *port, uint16_t pin)
+{
+  HAL_GPIO_WritePin(port, pin, GPIO_PIN_SET);
+}
+
+uint32_t TMC5160_ReadReg(GPIO_TypeDef *cs_port, uint16_t cs_pin, uint8_t reg)
+{
+  uint8_t tx[5] = {0};
+  uint8_t rx[5] = {0};
+
+  tx[0] = reg & 0x7F;
+
+  TMC5160_CS_Low(cs_port, cs_pin);
+  HAL_SPI_TransmitReceive(&hspi1, tx, rx, 5, HAL_MAX_DELAY);
+  TMC5160_CS_High(cs_port, cs_pin);
+
+  HAL_Delay(1);
+
+  memset(tx, 0, sizeof(tx));
+  memset(rx, 0, sizeof(rx));
+
+  TMC5160_CS_Low(cs_port, cs_pin);
+  HAL_SPI_TransmitReceive(&hspi1, tx, rx, 5, HAL_MAX_DELAY);
+  TMC5160_CS_High(cs_port, cs_pin);
+
+  uint32_t value = ((uint32_t)rx[1] << 24) |
+                   ((uint32_t)rx[2] << 16) |
+                   ((uint32_t)rx[3] <<  8) |
+                   ((uint32_t)rx[4]);
+  return value;
+}
+
+void TMC5160_WriteReg(GPIO_TypeDef *cs_port, uint16_t cs_pin, uint8_t reg, uint32_t value)
+{
+  uint8_t tx[5];
+  uint8_t rx[5];
+
+  tx[0] = reg | TMC5160_WRITE_BIT;
+  tx[1] = (value >> 24) & 0xFF;
+  tx[2] = (value >> 16) & 0xFF;
+  tx[3] = (value >>  8) & 0xFF;
+  tx[4] = (value >>  0) & 0xFF;
+
+  TMC5160_CS_Low(cs_port, cs_pin);
+  HAL_SPI_TransmitReceive(&hspi1, tx, rx, 5, HAL_MAX_DELAY);
+  TMC5160_CS_High(cs_port, cs_pin);
+}
+
+void TMC5160_Init(GPIO_TypeDef *cs_port, uint16_t cs_pin)
+{
+  /* 1. Clear error flags */
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_GSTAT, 0x07);
+
+  /* 2. GCONF: enable stealthChop */
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_GCONF, 0x00000004);
+
+  /* 3. CHOPCONF: TOFF=4, HSTRT=4, HEND=1, TBL=2, MRES=4 (16 microsteps) */
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_CHOPCONF, 0x04010094);
+
+  /* 4. IHOLD_IRUN: IHOLDDELAY=6, IRUN=10, IHOLD=5 */
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_IHOLD_IRUN, 0x00060A05);
+
+  /* 5. RAMPMODE = 0 → positioning mode */
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_RAMPMODE, 0x00000000);
+
+  /* 6. Gentle ramp profile */
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_VSTART, 1);
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_A1,     500);
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_V1,     5000);
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_AMAX,   500);
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_VMAX,   50000);
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_DMAX,   500);
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_D1,     500);
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_VSTOP,  10);
+
+  /* 7. Zero the position */
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_XACTUAL, 0);
+  TMC5160_WriteReg(cs_port, cs_pin, TMC5160_XTARGET, 0);
+}
+
 /* USER CODE END 0 */
 
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
 int main(void)
 {
-
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM1_Init();
-  /* USER CODE BEGIN 2 */
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-    /* USER CODE END 2 */
+  MX_SPI1_Init();
 
-    /* Infinite loop */
-    /* USER CODE BEGIN WHILE */
-    while (1)
-    {
-  	  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 50);
-    }
-    /* USER CODE END 3 */
+  /* USER CODE BEGIN 2 */
+
+  /* Start PWM for DC motor */
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+
+  /* Enable the TMC5160 driver (DRV_ENN LOW) */
+  HAL_GPIO_WritePin(DRV_EN_PORT, DRV_EN_PIN, GPIO_PIN_RESET);
+
+  /* Deselect CSN lines (HIGH) */
+  TMC5160_CS_High(CS1_PORT, CS1_PIN);
+  TMC5160_CS_High(CS2_PORT, CS2_PIN);
+
+  /* Let TMC5160 boot */
+  HAL_Delay(100);
+
+  /* Initialize stepper 1 */
+  TMC5160_Init(CS1_PORT, CS1_PIN);
+
+  /* Sanity check: should read 0x00000004 */
+  uint32_t gconf = TMC5160_ReadReg(CS1_PORT, CS1_PIN, TMC5160_GCONF);
+  (void)gconf;  /* breakpoint here */
+
+  /* ---- TEST: one full revolution forward ---- */
+  TMC5160_WriteReg(CS1_PORT, CS1_PIN, TMC5160_XTARGET, 64000);
+
+  uint32_t pos = 0;
+  do {
+    HAL_Delay(50);
+    pos = TMC5160_ReadReg(CS1_PORT, CS1_PIN, TMC5160_XACTUAL);
+  } while (pos != 64000);
+
+  /* Pause then return to zero */
+  HAL_Delay(500);
+  TMC5160_WriteReg(CS1_PORT, CS1_PIN, TMC5160_XTARGET, 0);
+
+  do {
+    HAL_Delay(50);
+    pos = TMC5160_ReadReg(CS1_PORT, CS1_PIN, TMC5160_XACTUAL);
+  } while (pos != 0);
+
+  /* USER CODE END 2 */
+
+  while (1)
+  {
   }
-/**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+}
+
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure the main internal regulator output voltage
-  */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
@@ -126,8 +262,6 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
@@ -141,25 +275,34 @@ void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief TIM1 Initialization Function
-  * @param None
-  * @retval None
-  */
+static void MX_SPI1_Init(void)
+{
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;          /* CPOL=1 for SPI Mode 3 */
+  hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;               /* CPHA=1 for SPI Mode 3 */
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;  /* ~2 MHz */
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 7;
+  hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi1.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
 static void MX_TIM1_Init(void)
 {
-
-  /* USER CODE BEGIN TIM1_Init 0 */
-
-  /* USER CODE END TIM1_Init 0 */
-
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
-  /* USER CODE BEGIN TIM1_Init 1 */
-
-  /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 79;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -206,85 +349,45 @@ static void MX_TIM1_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM1_Init 2 */
-
-  /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
-
 }
 
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
 
-  /* USER CODE END MX_GPIO_Init_1 */
-
-  /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
+  /* PC10 (DRV_ENN) LOW = enabled, PC11 (CSN) HIGH = deselected */
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
 
-  /*Configure GPIO pin : PA5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PC10 */
-  GPIO_InitStruct.Pin = GPIO_PIN_10;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
-
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
 void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
   }
-  /* USER CODE END Error_Handler_Debug */
 }
+
 #ifdef USE_FULL_ASSERT
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

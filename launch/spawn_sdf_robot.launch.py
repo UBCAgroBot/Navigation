@@ -4,7 +4,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 import os
 
-with open('/home/lucas/ros2_ws/src/my_robot_description/models/my_robot/model.sdf', 'r') as infp:
+with open('/home/ubuntu/ros2_ws/src/my_robot_description/models/my_robot/model.sdf', 'r') as infp:
     robot_desc = infp.read()
 
 def generate_launch_description():

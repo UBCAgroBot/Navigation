@@ -117,8 +117,13 @@ To run other nodes instead, use the commands below.
 Follows the left wall using a PD controller on raw LiDAR scans.
 
 ```bash
-ros2 launch nav_algorithms wall_follower_launch.py type:=lidar
+ros2 launch nav_algorithms wall_follower_launch.py
 ```
+
+| Argument | Default | What it does |
+|---|---|---|
+| `type` | `lidar` | `lidar` runs `wall_follower_lidar`; `map` runs the map-based `wall_follower` *(WIP)* |
+| `fake_scan` | `false` | `true` also starts `demo_lidar` to publish synthetic `/scan` data — only use without Gazebo |
 
 ### Gap Follower
 

@@ -93,7 +93,7 @@ def generate_launch_description() -> LaunchDescription:
     )
       
     application_node_from_other_pkg = Node(
-        package='tasks12',
+        package='nav_algorithms',
         executable='gap_follower_node', # The name defined in setup.py or CMakeLists.txt
         name='gap_follower_node',
         output='screen',

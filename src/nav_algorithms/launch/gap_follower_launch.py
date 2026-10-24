@@ -9,7 +9,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         Node(
-            package='tasks12',
+            package='nav_algorithms',
             executable='gap_follower_node',
             name='gap_follower_node',
             output='screen',

@@ -117,7 +117,7 @@ To run other nodes instead, use the commands below.
 Follows the left wall using a PD controller on raw LiDAR scans.
 
 ```bash
-ros2 launch tasks12 tasks12_launch.py type:=lidar
+ros2 launch nav_algorithms wall_follower_launch.py type:=lidar
 ```
 
 ### Gap Follower
@@ -125,17 +125,17 @@ ros2 launch tasks12 tasks12_launch.py type:=lidar
 Finds the largest open gap in the scan and steers toward it.
 
 ```bash
-ros2 launch tasks12 gap_follower_launch.py
+ros2 launch nav_algorithms gap_follower_launch.py
 ```
 
 ### Single Node (no launch file)
 
 ```bash
-ros2 run tasks12 wall_follower_lidar
-ros2 run tasks12 gap_follower_node
-ros2 run tasks12 gap_follower_ackermann   # PD + safety-bubble gap follower (Ackermann /drive)
-ros2 run tasks12 demo_lidar          # fake LiDAR data for testing without Gazebo
-ros2 run tasks12 explorer            # frontier exploration (needs Nav2 + a map)
+ros2 run nav_algorithms wall_follower_lidar
+ros2 run nav_algorithms gap_follower_node
+ros2 run nav_algorithms gap_follower_ackermann   # PD + safety-bubble gap follower (Ackermann /drive)
+ros2 run nav_algorithms demo_lidar               # fake LiDAR data for testing without Gazebo
+ros2 run nav_algorithms explorer                 # frontier exploration (needs Nav2 + a map)
 ```
 
 ---
@@ -167,7 +167,7 @@ Navigation/
     ├── my_robot_description/     ← sim launch + original four-wheel robot model
     ├── rev3_description/         ← rev3 robot model + spawn launch
     ├── rev4_description/         ← rev4 robot model + spawn launch
-    ├── tasks12/                  ← navigation nodes (Python)
+    ├── nav_algorithms/           ← navigation nodes (Python)
     ├── virtual_maize_field/      ← submodule: maize field world generator
     └── drivers/
         ├── rslidar_sdk/          ← submodule: RoboSense LiDAR driver
@@ -182,7 +182,7 @@ Some remote branches hold separate projects rather than feature work on this cod
 |---|---|
 | `Motorcontrols` | STM32G474 motor control firmware |
 | `sensor_fusion_main`, `sensor_fusion_4`, `sensor_fusion_fastlio`, `sensor-fusion3` | FAST-LIO / EKF sensor fusion workspaces |
-| `path-planning` | Early Nav2 experiments (superseded by `src/tasks12`) |
+| `path-planning` | Early Nav2 experiments (superseded by `src/nav_algorithms`) |
 
 ---
 

@@ -26,7 +26,7 @@ class gap_follower_node(Node):
         Configures PD controller gains and safety thresholds.
         """
 
-        super().__init__('gap_follower_node')
+        super().__init__('gap_follower_ackermann')
 
         self.get_logger().info('==========Gap Follower Node initialized===========')
 

@@ -30,7 +30,8 @@ setup(
             'wall_follower_lidar = tasks12.wall_follower_lidar:main',
             'demo_lidar = tasks12.demo_lidar:main',
             'gap_follower_node = tasks12.gap_follower_node:main',
-            'explorer = tasks12.explorer:main'
+            'explorer = tasks12.explorer:main',
+            'gap_follower_ackermann = tasks12.gap_follower_ackermann:main'
         ],
     },
 )

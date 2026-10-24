@@ -1,0 +1,18 @@
+# colcon
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.pyc
+
+# Editors / OS
+*.swp
+*.swo
+.vscode/
+.idea/
+.DS_Store
+
+# Generated worlds (run `ros2 run virtual_maize_field generate_world`)
+*.world

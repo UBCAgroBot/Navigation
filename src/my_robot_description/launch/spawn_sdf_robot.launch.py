@@ -3,20 +3,21 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 import os
+from ament_index_python.packages import get_package_share_directory
 
-with open('/home/ubuntu/ros2_ws/src/my_robot_description/models/my_robot/model.sdf', 'r') as infp:
+SDF_PATH = os.path.join(
+    get_package_share_directory('my_robot_description'), 'models', 'my_robot', 'model.sdf'
+)
+
+with open(SDF_PATH, 'r') as infp:
     robot_desc = infp.read()
 
 def generate_launch_description():
 
-    sdf_default = os.path.expanduser(
-        '~/ros2_ws/src/my_robot_description/models/my_robot/model.sdf'
-    )
-
     return LaunchDescription([
         DeclareLaunchArgument(
             'sdf_path',
-            default_value=sdf_default,
+            default_value=SDF_PATH,
             description='Absolute path to robot SDF file'
         ),
 

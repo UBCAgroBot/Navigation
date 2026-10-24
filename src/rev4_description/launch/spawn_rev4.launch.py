@@ -3,20 +3,21 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 import os
+from ament_index_python.packages import get_package_share_directory
 
-with open('/home/lucas/new_ws/src/rev4_description/models/rev4/rev4.sdf', 'r') as infp:
+SDF_PATH = os.path.join(
+    get_package_share_directory('rev4_description'), 'models', 'rev4', 'rev4.sdf'
+)
+
+with open(SDF_PATH, 'r') as infp:
     robot_desc = infp.read()
 
 def generate_launch_description():
 
-    sdf_default = os.path.expanduser(
-        '~/new_ws/src/rev4_description/models/rev4/rev4.sdf'
-    )
-
     return LaunchDescription([
         DeclareLaunchArgument(
             'sdf_path',
-            default_value=sdf_default,
+            default_value=SDF_PATH,
             description='Absolute path to robot SDF file'
         ),
 
@@ -29,9 +30,9 @@ def generate_launch_description():
                 '-z', '1',
                 '-x', '6.9',
                 '-y', '-8',
-        		'-R', '0.0',
-        		'-P', '0.0',
-        		'-Y', '1.5708'
+                '-R', '0.0',
+                '-P', '0.0',
+                '-Y', '1.5708'
             ],
             output='screen'
         ),

@@ -134,7 +134,7 @@ class WorldGenerator:
             content = launch_file_template.render(
                 x=float(self.fgen.start_loc[0][0]) + self.wd.rng.random() * 0.1 - 0.05,
                 y=float(self.fgen.start_loc[0][1]) + self.wd.rng.random() * 0.1 - 0.05,
-                z=0.35 + self.wd.ground_ditch_depth,
+                z=0.7 + self.wd.ground_ditch_depth,  # AgroBot: raised from 0.35 so rev3/rev4 don't spawn in the ground
                 roll=0,
                 pitch=0,
                 yaw=1.5707963267948966 + self.wd.rng.random() * 0.1 - 0.05,

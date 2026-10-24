@@ -23,7 +23,7 @@ git clone --recurse-submodules git@github.com:UBCAgroBot/Navigation.git
 ```
 
 > Already cloned? Run `git submodule update --init --recursive` to pull in
-> `virtual_maize_field` and the RoboSense LiDAR driver.
+> the RoboSense LiDAR driver.
 
 Open this folder in VS Code. It will prompt you to reopen in a container.
 
@@ -173,11 +173,24 @@ Navigation/
     ├── rev3_description/         ← rev3 robot model + spawn launch
     ├── rev4_description/         ← rev4 robot model + spawn launch
     ├── nav_algorithms/           ← navigation nodes (Python)
-    ├── virtual_maize_field/      ← submodule: maize field world generator
+    ├── virtual_maize_field/      ← maize field world generator (vendored, see below)
     └── drivers/
         ├── rslidar_sdk/          ← submodule: RoboSense LiDAR driver
         └── rslidar_msg/          ← submodule: RoboSense message types
 ```
+
+### Vendored `virtual_maize_field`
+
+`src/virtual_maize_field` is a copy of [FieldRobotEvent/virtual_maize_field](https://github.com/FieldRobotEvent/virtual_maize_field)
+(`ros2-ign` branch, GPLv3), added with `git subtree --squash` so we can edit it in place.
+Our changes are marked with `AgroBot:` comments. To pull upstream changes:
+
+```bash
+git subtree pull --prefix=src/virtual_maize_field --squash \
+  https://github.com/FieldRobotEvent/virtual_maize_field.git ros2-ign
+```
+
+This replaces the old `UBCAgroBot/navigation_gazebo` fork.
 
 ### Other branches
 

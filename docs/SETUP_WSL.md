@@ -71,7 +71,7 @@ Should show `Jammy` and `22.04`.
 ## Phase 2 — Clone the Repo
 
 Clone **inside the WSL filesystem** (not under `/mnt/c/`) — builds are much faster and symlinks work.
-`--recurse-submodules` pulls in `virtual_maize_field` and the RoboSense LiDAR driver.
+`--recurse-submodules` pulls in the RoboSense LiDAR driver.
 
 ```bash
 git clone --recurse-submodules git@github.com:UBCAgroBot/Navigation.git ~/Navigation

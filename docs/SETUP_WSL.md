@@ -68,15 +68,20 @@ Should show `Jammy` and `22.04`.
 ---
 ---
 
-## Phase 2 — Verify Code Access
+## Phase 2 — Clone the Repo
 
-Your Windows files are automatically accessible in WSL2 at `/mnt/c/`. No mounting needed.
+Clone **inside the WSL filesystem** (not under `/mnt/c/`) — builds are much faster and symlinks work.
+`--recurse-submodules` pulls in `virtual_maize_field` and the RoboSense LiDAR driver.
 
 ```bash
-ls /mnt/c/Agrobot/Gazebo_Env/Navigation/
+git clone --recurse-submodules git@github.com:UBCAgroBot/Navigation.git ~/Navigation
+cd ~/Navigation
 ```
 
-Should show `simulation.launch.py`, `tasks12/`, `models/`, `setup_wsl.sh`, etc.
+Should show `src/`, `scripts/`, `docs/`, etc.
+
+> [!NOTE]
+> Already cloned without submodules? Run `git submodule update --init --recursive`.
 
 ---
 ---
@@ -86,8 +91,8 @@ Should show `simulation.launch.py`, `tasks12/`, `models/`, `setup_wsl.sh`, etc.
 > [!TIP]
 > **This entire phase is automated.** Run the setup script:
 > ```bash
-> chmod +x /mnt/c/Agrobot/Gazebo_Env/Navigation/setup_wsl.sh
-> /mnt/c/Agrobot/Gazebo_Env/Navigation/setup_wsl.sh
+> chmod +x ~/Navigation/scripts/setup_wsl.sh
+> ~/Navigation/scripts/setup_wsl.sh
 > ```
 > Then skip ahead to **Phase 4**. The steps below are the manual version if you prefer.
 
@@ -185,47 +190,30 @@ Should show ROS 2 commands and Gazebo version `6.x.x`.
 
 ## Phase 4 — Build the ROS 2 Workspace
 
-### 4.1) Create workspace + symlink packages
+The repo **is** the workspace — every package lives under `src/`.
+
+### 4.1) Install dependencies + build
 
 ```bash
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws/src
-
-ln -s /mnt/c/Agrobot/Gazebo_Env/Navigation my_robot_description
-ln -s /mnt/c/Agrobot/Gazebo_Env/Navigation/tasks12 tasks12
-```
-
----
-
-### 4.2) Clone virtual_maize_field (provides maize crop models)
-
-```bash
-cd ~/ros2_ws/src
-git clone https://github.com/FieldRobotEvent/virtual_maize_field.git
-```
-
----
-
-### 4.3) Install dependencies + build
-
-```bash
-cd ~/ros2_ws
+cd ~/Navigation
 rosdep install --from-paths src --ignore-src -r -y
 colcon build --symlink-install
 ```
 
 ---
 
-### 4.4) Source workspace + set Gazebo model path
+### 4.2) Source workspace + set Gazebo resource path
 
 ```bash
-echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
-echo 'export IGN_GAZEBO_RESOURCE_PATH=$HOME/ros2_ws/install/virtual_maize_field/share/virtual_maize_field/models:$HOME/.ros/virtual_maize_field:$IGN_GAZEBO_RESOURCE_PATH' >> ~/.bashrc
+echo "source ~/Navigation/install/setup.bash" >> ~/.bashrc
+echo 'export IGN_GAZEBO_RESOURCE_PATH=$HOME/.ros/virtual_maize_field:$IGN_GAZEBO_RESOURCE_PATH' >> ~/.bashrc
 source ~/.bashrc
 ```
 
 > [!IMPORTANT]
-> The `IGN_GAZEBO_RESOURCE_PATH` line is critical. Without it, Gazebo can't find the maize crop models (`model://maize_01`, etc.) and the world file fails to load.
+> Sourcing `install/setup.bash` adds the maize crop models (`model://maize_01`, etc.) to
+> `IGN_GAZEBO_RESOURCE_PATH` automatically. The extra line adds the folder holding the
+> generated world's assets. Without both, the world file fails to load.
 
 ---
 ---
@@ -305,7 +293,7 @@ If you see data → everything works. 🎉
 |------|---------|
 | Enter WSL | `wsl -d Ubuntu-22.04` |
 | List distros | `wsl -l -v` |
-| Rebuild | `cd ~/ros2_ws && colcon build --symlink-install` |
+| Rebuild | `cd ~/Navigation && colcon build --symlink-install` |
 | Sim (GUI) | `export LIBGL_ALWAYS_SOFTWARE=1 && ros2 launch my_robot_description simulation.launch.py` |
 | Sim (headless) | `ros2 launch my_robot_description simulation.launch.py headless:=True` |
 | Spawn robot | `ros2 launch my_robot_description spawn_sdf_robot.launch.py` |

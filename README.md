@@ -16,7 +16,14 @@ Built with **ROS 2 Humble**.
 
 ## 🚀 Quick Start
 
-### Step 1 — Open the Dev Container
+### Step 1 — Clone + Open the Dev Container
+
+```bash
+git clone --recurse-submodules git@github.com:UBCAgroBot/Navigation.git
+```
+
+> Already cloned? Run `git submodule update --init --recursive` to pull in
+> `virtual_maize_field` and the RoboSense LiDAR driver.
 
 Open this folder in VS Code. It will prompt you to reopen in a container.
 
@@ -36,6 +43,7 @@ Open this folder in VS Code. It will prompt you to reopen in a container.
 
 ```bash
 cd /home/vscode/workspace
+rosdep install --from-paths src --ignore-src -r -y
 colcon build --symlink-install
 source install/setup.bash
 ```
@@ -50,7 +58,7 @@ source install/setup.bash
 ### Step 3 — Generate a World
 
 ```bash
-python3 generate_world.py
+ros2 run virtual_maize_field generate_world
 ```
 
 This creates a maize field world file at `~/.ros/virtual_maize_field/generated.world`.
@@ -72,6 +80,13 @@ ros2 launch my_robot_description spawn_sdf_robot.launch.py
 ```
 
 That's it — you should see the robot in the field. 🎉
+
+To spawn a newer robot revision instead:
+
+```bash
+ros2 launch rev4_description spawn_rev4.launch.py
+ros2 launch rev3_description spawn.launch.py
+```
 
 <details>
 <summary><b>Optional launch arguments</b></summary>
@@ -118,6 +133,7 @@ ros2 launch tasks12 gap_follower_launch.py
 ```bash
 ros2 run tasks12 wall_follower_lidar
 ros2 run tasks12 gap_follower_node
+ros2 run tasks12 gap_follower_ackermann   # PD + safety-bubble gap follower (Ackermann /drive)
 ros2 run tasks12 demo_lidar          # fake LiDAR data for testing without Gazebo
 ros2 run tasks12 explorer            # frontier exploration (needs Nav2 + a map)
 ```
@@ -130,6 +146,7 @@ ros2 run tasks12 explorer            # frontier exploration (needs Nav2 + a map)
 |---|---|---|
 | `wall_follower_lidar` | PD wall follower on raw LiDAR | `/drive` (Ackermann) |
 | `gap_follower_node` | Reactive gap finder | `/cmd_vel` (Twist) + `/steer_fl`, `/steer_fr` |
+| `gap_follower_ackermann` | Gap finder with safety bubbles, disparity extension, PD steering | `/drive` (Ackermann) |
 | `demo_lidar` | Synthetic LiDAR publisher for offline tests | `/scan` |
 | `explorer` | Frontier-based exploration via Nav2 | Nav2 action goals |
 | `wall_follower` | Map-based wall follower *(WIP — not functional yet)* | Nav2 action goals |
@@ -141,24 +158,31 @@ ros2 run tasks12 explorer            # frontier exploration (needs Nav2 + a map)
 ```
 Navigation/
 ├── .devcontainer/
-│   ├── ROS/                  ← simulation-only container
-│   └── ZED_ROS/              ← ZED camera + GPU container
-├── containers/
-│   ├── ROS-Dev.Dockerfile
-│   └── scripts/              ← install scripts (ROS 2, cmake, FastLIO2, …)
-├── launch/
-│   └── spawn_sdf_robot.launch.py
-├── models/my_robot/          ← robot SDF model
-├── tasks12/                  ← navigation ROS 2 package
-│   ├── launch/               ← launch files
-│   └── tasks12/              ← Python source (nodes listed above)
-├── virtual_maize_field/      ← world generation plugin
-├── path-planning/            ← path planning workspace
-├── sensor-fusion/            ← sensor fusion workspace
-├── generate_world.py         ← world generator script
-├── simulation.launch.py      ← main simulation launch
-└── package.xml / CMakeLists.txt
+│   ├── ROS/                      ← simulation-only container
+│   └── ZED_ROS/                  ← ZED camera + GPU container
+├── containers/                   ← ROS-Dev.Dockerfile + install scripts
+├── docs/SETUP_WSL.md             ← native WSL2 setup (no Docker)
+├── scripts/setup_wsl.sh          ← installs ROS 2 Humble + Gazebo Fortress
+└── src/                          ← colcon workspace: every ROS package lives here
+    ├── my_robot_description/     ← sim launch + original four-wheel robot model
+    ├── rev3_description/         ← rev3 robot model + spawn launch
+    ├── rev4_description/         ← rev4 robot model + spawn launch
+    ├── tasks12/                  ← navigation nodes (Python)
+    ├── virtual_maize_field/      ← submodule: maize field world generator
+    └── drivers/
+        ├── rslidar_sdk/          ← submodule: RoboSense LiDAR driver
+        └── rslidar_msg/          ← submodule: RoboSense message types
 ```
+
+### Other branches
+
+Some remote branches hold separate projects rather than feature work on this code:
+
+| Branch | Contents |
+|---|---|
+| `Motorcontrols` | STM32G474 motor control firmware |
+| `sensor_fusion_main`, `sensor_fusion_4`, `sensor_fusion_fastlio`, `sensor-fusion3` | FAST-LIO / EKF sensor fusion workspaces |
+| `path-planning` | Early Nav2 experiments (superseded by `src/tasks12`) |
 
 ---
 

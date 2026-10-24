@@ -4,8 +4,8 @@
 #  Installs ROS 2 Humble + Ignition Gazebo Fortress inside WSL2 (Ubuntu 22.04)
 #
 #  Run inside WSL2 Ubuntu 22.04:
-#    chmod +x setup_wsl.sh
-#    ./setup_wsl.sh
+#    chmod +x scripts/setup_wsl.sh
+#    ./scripts/setup_wsl.sh
 # ============================================================================
 
 set -eo pipefail  # Exit on error; fail pipeline on first command error
@@ -127,5 +127,5 @@ echo "  WSL2 GUI/Network flags ... configured"
 echo ""
 echo "  Next steps:"
 echo "    1. Reload your shell: source ~/.bashrc"
-echo "    2. Proceed to Phase 4 (Workspace build)"
+echo "    2. Proceed to Phase 4 of docs/SETUP_WSL.md (workspace build)"
 echo ""

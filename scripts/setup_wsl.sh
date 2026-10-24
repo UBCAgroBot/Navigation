@@ -30,16 +30,22 @@ export LANG=en_US.UTF-8
 # ─────────────────────────────────────────────
 #  2. Add ROS 2 Apt Repository
 # ─────────────────────────────────────────────
-log "Adding ROS 2 apt repository..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq curl gnupg2 lsb-release software-properties-common > /dev/null
 sudo add-apt-repository universe -y > /dev/null 2>&1
 
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
-  -o /usr/share/keyrings/ros-archive-keyring.gpg
-
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \
-  http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" \
-  | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+# Adding the repo a second time with a different key breaks apt ("Conflicting
+# values set for option Signed-By"), so skip if any ROS 2 source already exists.
+if grep -rqs "packages.ros.org/ros2" /etc/apt/sources.list /etc/apt/sources.list.d/; then
+  log "ROS 2 apt repository already configured, skipping"
+else
+  log "Adding ROS 2 apt repository..."
+  ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest \
+    | grep -F "tag_name" | awk -F\" '{print $4}')
+  curl -sSL -o /tmp/ros2-apt-source.deb \
+    "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo "$VERSION_CODENAME")_all.deb"
+  sudo dpkg -i /tmp/ros2-apt-source.deb > /dev/null
+  rm -f /tmp/ros2-apt-source.deb
+fi
 
 # ─────────────────────────────────────────────
 #  3. Install ROS 2 Humble Desktop & Tools
@@ -78,18 +84,16 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
 # ─────────────────────────────────────────────
 log "Configuring ~/.bashrc with ROS 2 and WSL2 stability variables..."
 
-if ! grep -q "source /opt/ros/humble/setup.bash" ~/.bashrc; then
-  echo "" >> ~/.bashrc
-  echo "# ROS 2 Humble" >> ~/.bashrc
-  echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-  
-  echo "# WSL2 ROS 2 Network Isolation (prevents dropped terminal discovery)" >> ~/.bashrc
-  echo "export ROS_LOCALHOST_ONLY=1" >> ~/.bashrc
-  
-  echo "# WSLg GUI Rendering Fixes (prevents Gazebo black screens & crashes)" >> ~/.bashrc
-  echo "export QT_QPA_PLATFORM=xcb" >> ~/.bashrc
-  echo "export LIBGL_ALWAYS_SOFTWARE=1" >> ~/.bashrc
-fi
+# Append each line only if missing, so machines with ROS already sourced
+# still get the WSL2 variables
+add_to_bashrc() {
+  grep -qxF "$2" ~/.bashrc || printf '%s\n%s\n' "$1" "$2" >> ~/.bashrc
+}
+
+add_to_bashrc "# ROS 2 Humble" "source /opt/ros/humble/setup.bash"
+add_to_bashrc "# WSL2 ROS 2 Network Isolation (prevents dropped terminal discovery)" "export ROS_LOCALHOST_ONLY=1"
+add_to_bashrc "# WSLg GUI Rendering Fixes (prevents Gazebo black screens & crashes)" "export QT_QPA_PLATFORM=xcb"
+add_to_bashrc "# WSLg software rendering" "export LIBGL_ALWAYS_SOFTWARE=1"
 
 # Source for current shell session
 # Temporarily disable unbound variable checking if active, as ROS setup files rely on empty vars

@@ -20,13 +20,18 @@ def construct_gz_args(
     world_file: SomeSubstitutionsType,
     paused: SomeSubstitutionsType,
     headless: SomeSubstitutionsType,
+    headless_rendering: SomeSubstitutionsType,
 ) -> SomeSubstitutionsType:
     paused_arg = PythonExpression(['"" if "', paused, '".lower() == "true" else "-r "'])
     headless_arg = PythonExpression(
         ['"-s " if "', headless, '".lower() == "true" else ""']
     )
 
-    return PythonExpression(["'", headless_arg, paused_arg, world_file, "'"])
+    headless_rendering_arg = PythonExpression(
+        ['"--headless-rendering " if "', headless_rendering, '".lower() == "true" else ""']
+    )
+
+    return PythonExpression(["'", headless_arg, headless_rendering_arg, paused_arg, world_file, "'"])
 
 
 def generate_launch_description() -> LaunchDescription:
@@ -36,6 +41,7 @@ def generate_launch_description() -> LaunchDescription:
     use_sim_time = LaunchConfiguration("use_sim_time")
     paused = LaunchConfiguration("paused")
     headless = LaunchConfiguration("headless")
+    headless_rendering = LaunchConfiguration("headless_rendering")
     world_path = LaunchConfiguration("world_path")
     world_name = LaunchConfiguration("world_name")
 
@@ -50,6 +56,11 @@ def generate_launch_description() -> LaunchDescription:
         name="headless",
         default_value="False",
         description="Start headless simulation (without rendering).",
+    )
+    declare_headless_rendering_cmd = DeclareLaunchArgument(
+        name="headless_rendering",
+        default_value="False",
+        description="Render sensors via EGL on the GPU without a display (use with headless:=True).",
     )
     declare_world_path_cmd = DeclareLaunchArgument(
         name="world_path",
@@ -66,6 +77,7 @@ def generate_launch_description() -> LaunchDescription:
         PathJoinSubstitution([world_path, world_name]),
         paused,
         headless,
+        headless_rendering,
     )
 
     log_gz_args = LogInfo(msg=["Start Ignition Gazebo with gz_args: '", gz_args, "'"])
@@ -106,6 +118,7 @@ def generate_launch_description() -> LaunchDescription:
     ld.add_action(declare_use_sim_time_cmd)
     ld.add_action(declare_paused_cmd)
     ld.add_action(declare_headless_cmd)
+    ld.add_action(declare_headless_rendering_cmd)
     ld.add_action(declare_world_path_cmd)
     ld.add_action(declare_world_name_cmd)
 

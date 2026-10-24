@@ -100,6 +100,7 @@ ros2 launch my_robot_description simulation.launch.py paused:=True headless:=Tru
 | `use_sim_time` | `True` | Use the simulation clock |
 | `paused` | `False` | Start Gazebo paused |
 | `headless` | `False` | Run without the Gazebo GUI |
+| `headless_rendering` | `False` | With `headless:=True`, render sensors (LiDAR) on the GPU via EGL — no display needed. Use on the Jetson over SSH/NoMachine |
 | `world_path` | `~/.ros/virtual_maize_field/` | Folder with the `.world` file |
 | `world_name` | `generated.world` | World filename |
 

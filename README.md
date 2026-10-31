@@ -166,11 +166,13 @@ to the STM32 at 20 Hz over the Nucleo-G474RE's ST-LINK USB serial port. The STM3
 command with an ack echoing the values it applied. If commands stop for 0.5 s the bridge sends
 zero speed; the firmware also stops the drive motor after 300 ms without a command.
 
-The firmware side is on the `motor-cmd-link` branch (based on `Motorcontrols`). It ships with
-`CMD_LINK_DRIVE_MOTORS 0`: commands are acknowledged but nothing moves.
+The firmware is in `firmware/motor_control` (STM32CubeIDE project for the Nucleo-G474RE; protocol
+in `Core/Inc/cmd_link.h`). It ships with `CMD_LINK_DRIVE_MOTORS 0`: commands are acknowledged but
+nothing moves. Import that folder into STM32CubeIDE to build and flash it. Don't regenerate code
+from the `.ioc` file: `main.c` has hand edits that CubeMX would overwrite.
 
 ```bash
-# STM32 plugged in by USB, flashed with motor-cmd-link firmware
+# STM32 plugged in by USB and flashed
 ros2 run motor_bridge motor_bridge                                    # T1
 ros2 topic pub --rate 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5}}"   # T2
 ```
@@ -199,6 +201,8 @@ Navigation/
 ├── containers/                   ← ROS-Dev.Dockerfile + install scripts
 ├── docs/SETUP_WSL.md             ← native WSL2 setup (no Docker)
 ├── scripts/setup_wsl.sh          ← installs ROS 2 Humble + Gazebo Fortress
+├── firmware/
+│   └── motor_control/            ← STM32G474 motor control firmware (STM32CubeIDE project)
 └── src/                          ← colcon workspace: every ROS package lives here
     ├── my_robot_description/     ← sim launch + original four-wheel robot model
     ├── rev3_description/         ← rev3 robot model + spawn launch
@@ -230,7 +234,7 @@ Some remote branches hold separate projects rather than feature work on this cod
 
 | Branch | Contents |
 |---|---|
-| `Motorcontrols` | STM32G474 motor control firmware |
+| `Motorcontrols` | STM32G474 motor control firmware — now in `firmware/motor_control` |
 | `sensor_fusion_main`, `sensor_fusion_4`, `sensor_fusion_fastlio`, `sensor-fusion3` | FAST-LIO / EKF sensor fusion workspaces |
 | `path-planning` | Early Nav2 experiments (superseded by `src/nav_algorithms`) |
 

@@ -1,7 +1,7 @@
 """
 ASCII command link to the STM32 motor controller.
 
-Must match Core/Inc/cmd_link.h in the Motorcontrols firmware.
+Must match firmware/motor_control/Core/Inc/cmd_link.h.
 
 Jetson -> STM32:  $C,<seq>,<speed_mm_s>,<steer_mrad>*<CS>\\n
 STM32 -> Jetson:  $A,<seq>,<speed_mm_s>,<steer_mrad>,<flags>*<CS>\\n

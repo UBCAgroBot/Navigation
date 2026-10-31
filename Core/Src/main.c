@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
+#include "cmd_link.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,6 +70,30 @@
 #define CS2_PIN       GPIO_PIN_6
 #define CS2_PORT      GPIOB
 
+/* ---- Jetson command link (protocol in cmd_link.h) ---- */
+
+/* 0: parse and acknowledge commands, but leave the motors alone (bench test).
+   1: drive the DC motor PWM and the steering stepper from the commands. */
+#define CMD_LINK_DRIVE_MOTORS   0
+
+/* Stop the drive motor if no valid command arrives for this long */
+#define CMD_TIMEOUT_MS          300
+
+/* TODO(motor team): speed that maps to 100% PWM duty */
+#define CMD_MAX_SPEED_MM_S      2000
+
+/* 35 degrees, the same limit as the nav_algorithms gap follower */
+#define CMD_MAX_STEER_MRAD      611
+
+/* TODO(motor team): measure. Assumes the existing test's 64000 usteps is one
+   full revolution of the steering output. */
+#define STEER_USTEPS_PER_RAD    (64000.0f / 6.2831853f)
+
+#define ACK_FLAG_MOTORS_ENABLED 0x01
+#define ACK_FLAG_CLAMPED        0x02
+
+#define RX_RING_SIZE            128
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -81,7 +106,15 @@ SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim1;
 
+UART_HandleTypeDef hlpuart1;
+
 /* USER CODE BEGIN PV */
+
+/* Bytes received from the Jetson, filled by the UART interrupt */
+static volatile uint8_t  rx_ring[RX_RING_SIZE];
+static volatile uint16_t rx_head;
+static volatile uint16_t rx_tail;
+static uint8_t           rx_byte;
 
 /* USER CODE END PV */
 
@@ -90,6 +123,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_LPUART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 void     TMC5160_CS_Low(GPIO_TypeDef *port, uint16_t pin);
@@ -188,6 +222,87 @@ void TMC5160_Init(GPIO_TypeDef *cs_port, uint16_t cs_pin)
   TMC5160_WriteReg(cs_port, cs_pin, TMC5160_XTARGET, 0);
 }
 
+/* ---- Jetson command link ---- */
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  if (huart->Instance == LPUART1)
+  {
+    uint16_t next = (uint16_t)((rx_head + 1) % RX_RING_SIZE);
+    if (next != rx_tail)  /* drop the byte if the ring is full */
+    {
+      rx_ring[rx_head] = rx_byte;
+      rx_head = next;
+    }
+    HAL_UART_Receive_IT(&hlpuart1, &rx_byte, 1);
+  }
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+  /* An overrun or framing error stops reception; restart it */
+  if (huart->Instance == LPUART1)
+  {
+    HAL_UART_Receive_IT(&hlpuart1, &rx_byte, 1);
+  }
+}
+
+static int RxPop(char *c)
+{
+  if (rx_tail == rx_head)
+  {
+    return 0;
+  }
+  *c = (char)rx_ring[rx_tail];
+  rx_tail = (uint16_t)((rx_tail + 1) % RX_RING_SIZE);
+  return 1;
+}
+
+static void SendLine(const char *line, int len)
+{
+  if (len > 0)
+  {
+    HAL_UART_Transmit(&hlpuart1, (const uint8_t *)line, (uint16_t)len, 10);
+  }
+}
+
+static void Drive_SetSpeed(int32_t speed_mm_s)
+{
+#if CMD_LINK_DRIVE_MOTORS
+  uint32_t ccr = (uint32_t)(((uint64_t)speed_mm_s * (htim1.Init.Period + 1)) / CMD_MAX_SPEED_MM_S);
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, ccr);
+#else
+  (void)speed_mm_s;
+#endif
+}
+
+static void Steer_SetAngle(int32_t steer_mrad)
+{
+#if CMD_LINK_DRIVE_MOTORS
+  int32_t target = (int32_t)((float)steer_mrad / 1000.0f * STEER_USTEPS_PER_RAD);
+  TMC5160_WriteReg(CS1_PORT, CS1_PIN, TMC5160_XTARGET, (uint32_t)target);
+#else
+  (void)steer_mrad;
+#endif
+}
+
+/* Clamp a command to what the hardware supports, apply it, and return the
+   ack flags. The drive motor has no direction control yet, so reverse
+   speeds are clamped to 0. */
+static uint8_t ApplyCommand(cmd_link_cmd_t *cmd)
+{
+  uint8_t flags = CMD_LINK_DRIVE_MOTORS ? ACK_FLAG_MOTORS_ENABLED : 0;
+
+  if (cmd->speed_mm_s < 0)                  { cmd->speed_mm_s = 0;                   flags |= ACK_FLAG_CLAMPED; }
+  if (cmd->speed_mm_s > CMD_MAX_SPEED_MM_S) { cmd->speed_mm_s = CMD_MAX_SPEED_MM_S;  flags |= ACK_FLAG_CLAMPED; }
+  if (cmd->steer_mrad > CMD_MAX_STEER_MRAD) { cmd->steer_mrad = CMD_MAX_STEER_MRAD;  flags |= ACK_FLAG_CLAMPED; }
+  if (cmd->steer_mrad < -CMD_MAX_STEER_MRAD){ cmd->steer_mrad = -CMD_MAX_STEER_MRAD; flags |= ACK_FLAG_CLAMPED; }
+
+  Drive_SetSpeed(cmd->speed_mm_s);
+  Steer_SetAngle(cmd->steer_mrad);
+  return flags;
+}
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -198,6 +313,7 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM1_Init();
   MX_SPI1_Init();
+  MX_LPUART1_UART_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -221,28 +337,44 @@ int main(void)
   uint32_t gconf = TMC5160_ReadReg(CS1_PORT, CS1_PIN, TMC5160_GCONF);
   (void)gconf;  /* breakpoint here */
 
-  /* ---- TEST: one full revolution forward ---- */
-  TMC5160_WriteReg(CS1_PORT, CS1_PIN, TMC5160_XTARGET, 64000);
+  /* Listen for commands from the Jetson */
+  cmd_link_parser_t parser;
+  cmd_link_parser_init(&parser);
+  HAL_UART_Receive_IT(&hlpuart1, &rx_byte, 1);
 
-  uint32_t pos = 0;
-  do {
-    HAL_Delay(50);
-    pos = TMC5160_ReadReg(CS1_PORT, CS1_PIN, TMC5160_XACTUAL);
-  } while (pos != 64000);
-
-  /* Pause then return to zero */
-  HAL_Delay(500);
-  TMC5160_WriteReg(CS1_PORT, CS1_PIN, TMC5160_XTARGET, 0);
-
-  do {
-    HAL_Delay(50);
-    pos = TMC5160_ReadReg(CS1_PORT, CS1_PIN, TMC5160_XACTUAL);
-  } while (pos != 0);
+  uint32_t last_cmd_tick = 0;
+  uint8_t  driving = 0;
+  char     reply[CMD_LINK_MAX_LINE];
 
   /* USER CODE END 2 */
 
   while (1)
   {
+    char c;
+    while (RxPop(&c))
+    {
+      cmd_link_cmd_t cmd;
+      int result = cmd_link_feed(&parser, c, &cmd);
+
+      if (result == CMD_LINK_OK)
+      {
+        uint8_t flags = ApplyCommand(&cmd);
+        last_cmd_tick = HAL_GetTick();
+        driving = 1;
+        SendLine(reply, cmd_link_format_ack(reply, sizeof(reply), &cmd, flags));
+      }
+      else if (result < 0)
+      {
+        SendLine(reply, cmd_link_format_error(reply, sizeof(reply), -result));
+      }
+    }
+
+    /* Safety stop if the Jetson goes quiet; steering holds its position */
+    if (driving && (HAL_GetTick() - last_cmd_tick) > CMD_TIMEOUT_MS)
+    {
+      Drive_SetSpeed(0);
+      driving = 0;
+    }
   }
 }
 
@@ -292,6 +424,28 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
   hspi1.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
   if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+static void MX_LPUART1_UART_Init(void)
+{
+  hlpuart1.Instance = LPUART1;
+  hlpuart1.Init.BaudRate = 115200;
+  hlpuart1.Init.WordLength = UART_WORDLENGTH_8B;
+  hlpuart1.Init.StopBits = UART_STOPBITS_1;
+  hlpuart1.Init.Parity = UART_PARITY_NONE;
+  hlpuart1.Init.Mode = UART_MODE_TX_RX;
+  hlpuart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  hlpuart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  hlpuart1.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  hlpuart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&hlpuart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_DisableFifoMode(&hlpuart1) != HAL_OK)
   {
     Error_Handler();
   }

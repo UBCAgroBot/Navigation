@@ -155,6 +155,37 @@ ros2 run nav_algorithms explorer                 # frontier exploration (needs N
 | `demo_lidar` | Synthetic LiDAR publisher for offline tests | `/scan` |
 | `explorer` | Frontier-based exploration via Nav2 | Nav2 action goals |
 | `wall_follower` | Map-based wall follower *(WIP — not functional yet)* | Nav2 action goals |
+| `motor_bridge` | Sends drive commands to the STM32 over serial and checks its acks | serial (`/dev/ttyACM0`) |
+
+---
+
+## 🔌 Talking to the STM32
+
+`motor_bridge` forwards `/cmd_vel` + `/steer_fl`/`/steer_fr` (what `gap_follower_node` publishes)
+to the STM32 at 20 Hz over the Nucleo-G474RE's ST-LINK USB serial port. The STM32 answers every
+command with an ack echoing the values it applied. If commands stop for 0.5 s the bridge sends
+zero speed; the firmware also stops the drive motor after 300 ms without a command.
+
+The firmware side is on the `motor-cmd-link` branch (based on `Motorcontrols`). It ships with
+`CMD_LINK_DRIVE_MOTORS 0`: commands are acknowledged but nothing moves.
+
+```bash
+# STM32 plugged in by USB, flashed with motor-cmd-link firmware
+ros2 run motor_bridge motor_bridge                                    # T1
+ros2 topic pub --rate 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5}}"   # T2
+```
+
+T1 should print `STM32 link up` and then `ack seq=… speed=500mm/s …`. Parameters: `port`
+(default `/dev/ttyACM0`), `baud`, `rate_hz`, `cmd_timeout`, `command_source`
+(`twist_steer` or `ackermann` for `/drive`), `dry_run` (log lines instead of opening the port).
+
+Message format (ASCII, XOR checksum of the bytes between `$` and `*`):
+
+| Direction | Line |
+|---|---|
+| Jetson → STM32 | `$C,<seq>,<speed_mm_s>,<steer_mrad>*<CS>` |
+| STM32 → Jetson | `$A,<seq>,<speed_mm_s>,<steer_mrad>,<flags>*<CS>` (flags: bit 0 motors enabled, bit 1 clamped) |
+| STM32 → Jetson | `$E,<code>*<CS>` (1 bad checksum, 2 bad format, 3 line too long) |
 
 ---
 
@@ -173,6 +204,7 @@ Navigation/
     ├── rev3_description/         ← rev3 robot model + spawn launch
     ├── rev4_description/         ← rev4 robot model + spawn launch
     ├── nav_algorithms/           ← navigation nodes (Python)
+    ├── motor_bridge/             ← ROS → STM32 serial link
     ├── virtual_maize_field/      ← maize field world generator (vendored, see below)
     └── drivers/
         ├── rslidar_sdk/          ← submodule: RoboSense LiDAR driver

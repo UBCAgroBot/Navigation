@@ -1,3 +1,6 @@
+#include "main.h"
+#include "PWMlogic.h"
+
 void SetMotorSpeedMPS(float speed_mps)
 {
     // Clamp speed to [0, MAX_SPEED_MPS]

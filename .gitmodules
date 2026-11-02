@@ -1,0 +1,7 @@
+[submodule "src/drivers/rslidar_sdk"]
+	path = src/drivers/rslidar_sdk
+	url = https://github.com/RoboSense-LiDAR/rslidar_sdk.git
+	branch = dev_opt
+[submodule "src/drivers/rslidar_msg"]
+	path = src/drivers/rslidar_msg
+	url = https://github.com/RoboSense-LiDAR/rslidar_msg.git
